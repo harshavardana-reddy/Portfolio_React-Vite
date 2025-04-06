@@ -1,7 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import { useState, useEffect } from 'react';
 import { Route, Routes, NavLink } from 'react-router-dom';
-import { FiHome, FiUser, FiBook, FiCode, FiLayers, FiMail, FiSun, FiMoon, FiGithub, FiLinkedin, FiX } from 'react-icons/fi';
+import { 
+  FiHome, FiUser, FiBook, FiCode, FiLayers, 
+  FiMail, FiSun, FiMoon, FiGithub, FiLinkedin, 
+  FiX, FiHeart 
+} from 'react-icons/fi';
 import { PiCertificateBold } from "react-icons/pi";
 import Home from './Home';
 import About from './About';
@@ -13,7 +17,8 @@ import { useTheme } from './ThemeContext';
 import Certifications from './Certifications';
 import socialLinks from '../Data/Sociallinks';
 
-const navItems = [
+// Constants
+const NAV_ITEMS = [
   { name: "Home", path: "/", icon: <FiHome size={18} /> },
   { name: "About", path: "/about", icon: <FiUser size={18} /> },
   { name: "Education", path: "/education", icon: <FiBook size={18} /> },
@@ -23,45 +28,82 @@ const navItems = [
   { name: "Contact", path: "/contact", icon: <FiMail size={18} /> },
 ];
 
-const socialIcons = [
+const SOCIAL_ICONS = [
   { icon: <FiGithub size={18} />, url: socialLinks.GitHub },
   { icon: <FiLinkedin size={18} />, url: socialLinks.LinkedIn }
 ];
 
+const PARTICLE_COUNT = 20;
+
 export default function MainNavBar() {
+  // State and context
   const { darkMode, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Effects
   useEffect(() => {
-    // Scroll effect
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    // Apply theme to document
     document.documentElement.classList.toggle('dark', darkMode);
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  // Handlers
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  // Theme classes
+  const themeClasses = {
+    bgGradient: darkMode 
+      ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' 
+      : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900',
+    navBar: darkMode 
+      ? 'bg-gray-900/70 border-b border-gray-700/50' 
+      : 'bg-white/70 border-b border-gray-200/50',
+    mainContent: darkMode 
+      ? 'bg-gray-900/30 border border-gray-700/30' 
+      : 'bg-white/30 border border-gray-200/30',
+    footer: darkMode 
+      ? 'bg-gray-900/10 text-gray-300' 
+      : 'bg-white/10 text-gray-600',
+    logoText: darkMode 
+      ? 'text-transparent bg-gradient-to-r from-purple-400 to-blue-400' 
+      : 'text-transparent bg-gradient-to-r from-purple-600 to-blue-600',
+    logoBg: darkMode 
+      ? 'bg-gradient-to-r from-purple-500 to-blue-500' 
+      : 'bg-gradient-to-r from-purple-600 to-blue-600',
+    themeToggle: darkMode 
+      ? 'text-yellow-300 hover:bg-gray-800/50' 
+      : 'text-yellow-600 hover:bg-white/80',
+    socialIcon: darkMode 
+      ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' 
+      : 'text-gray-600 hover:text-gray-900 hover:bg-white/80',
+    mobileMenuBg: darkMode ? 'bg-gray-900/90' : 'bg-white/90'
   };
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
+  // NavLink style generator
+  const getNavLinkStyle = (isActive) => {
+    const baseClasses = 'transition-all duration-300 flex items-center';
+    const activeClasses = darkMode 
+      ? 'text-white bg-gray-800/50' 
+      : 'text-gray-900 bg-white/80';
+    const inactiveClasses = darkMode 
+      ? 'text-gray-300 hover:text-white hover:bg-gray-800/30' 
+      : 'text-gray-600 hover:text-gray-900 hover:bg-white/60';
+    
+    return `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`;
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 
-      'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' : 
-      'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'}`}
-    >
+    <div className={`min-h-screen flex flex-col transition-colors duration-500 ${themeClasses.bgGradient}`}>
       {/* Floating particles background */}
       <div className="fixed inset-0 overflow-hidden opacity-20 dark:opacity-10">
-        {[...Array(20)].map((_, i) => (
+        {Array.from({ length: PARTICLE_COUNT }).map((_, i) => (
           <div 
             key={i}
             className={`absolute rounded-full ${darkMode ? 'bg-white' : 'bg-purple-600'}`}
@@ -79,53 +121,29 @@ export default function MainNavBar() {
 
       {/* Glassmorphic Navbar */}
       <nav className={`fixed w-full z-40 transition-all duration-500 ${
-        scrolled 
-          ? 'py-2 backdrop-blur-xl shadow-xl' 
-          : 'py-4 backdrop-blur-lg shadow-lg'
-        } ${
-          darkMode 
-            ? 'bg-gray-900/70 border-b border-gray-700/50' 
-            : 'bg-white/70 border-b border-gray-200/50'
-        }`}
+        scrolled ? 'py-2 backdrop-blur-xl shadow-xl' : 'py-4 backdrop-blur-lg shadow-lg'
+      } ${themeClasses.navBar}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             {/* Logo/Brand */}
             <div className="flex-shrink-0 flex items-center">
-              <div className={`h-8 w-8 rounded-full flex items-center justify-center shadow-lg ${
-                darkMode 
-                  ? 'bg-gradient-to-r from-purple-500 to-blue-500' 
-                  : 'bg-gradient-to-r from-purple-600 to-blue-600'
-                }`}
-              >
+              <div className={`h-8 w-8 rounded-full flex items-center justify-center shadow-lg ${themeClasses.logoBg}`}>
                 <span className="text-white font-bold text-xs">DP</span>
               </div>
-              <span className={`ml-2 font-semibold text-lg bg-clip-text ${
-                darkMode 
-                  ? 'text-transparent bg-gradient-to-r from-purple-400 to-blue-400' 
-                  : 'text-transparent bg-gradient-to-r from-purple-600 to-blue-600'
-                }`}
-              >
+              <span className={`ml-2 font-semibold text-lg bg-clip-text ${themeClasses.logoText}`}>
                 DevPortfolio
               </span>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-2">
-              {navItems.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.path}
                   className={({ isActive }) => 
-                    `relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center ${
-                      isActive 
-                        ? darkMode 
-                          ? 'text-white bg-gray-800/50' 
-                          : 'text-gray-900 bg-white/80'
-                        : darkMode 
-                          ? 'text-gray-300 hover:text-white hover:bg-gray-800/30' 
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
-                    }`
+                    `relative px-4 py-2 text-sm font-medium rounded-full ${getNavLinkStyle(isActive)}`
                   }
                 >
                   <span className="mr-2">{item.icon}</span>
@@ -138,17 +156,13 @@ export default function MainNavBar() {
             <div className="flex items-center space-x-4">
               {/* Social icons */}
               <div className="hidden md:flex items-center space-x-3">
-                {socialIcons.map((social, i) => (
+                {SOCIAL_ICONS.map((social, i) => (
                   <a 
                     key={i}
                     href={social.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className={`p-2 rounded-full transition-all ${
-                      darkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' 
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
-                    }`}
+                    className={`p-2 rounded-full ${themeClasses.socialIcon}`}
                   >
                     {social.icon}
                   </a>
@@ -158,11 +172,7 @@ export default function MainNavBar() {
               {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
-                className={`p-2 rounded-full transition-all ${
-                  darkMode 
-                    ? 'text-yellow-300 hover:bg-gray-800/50' 
-                    : 'text-yellow-600 hover:bg-white/80'
-                }`}
+                className={`p-2 rounded-full ${themeClasses.themeToggle}`}
               >
                 {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
               </button>
@@ -200,25 +210,14 @@ export default function MainNavBar() {
           mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
         }`}
         >
-          <div className={`px-4 pt-2 pb-4 space-y-2 ${
-            darkMode ? 'bg-gray-900/90' : 'bg-white/90'
-          }`}
-          >
-            {navItems.map((item) => (
+          <div className={`px-4 pt-2 pb-4 space-y-2 ${themeClasses.mobileMenuBg}`}>
+            {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
                 onClick={closeMobileMenu}
                 className={({ isActive }) => 
-                  `block px-4 py-3 rounded-lg text-base font-medium transition-all ${
-                    isActive 
-                      ? darkMode 
-                        ? 'text-white bg-gray-800/50' 
-                        : 'text-gray-900 bg-white/80'
-                      : darkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800/30' 
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
-                  }`
+                  `block px-4 py-3 rounded-lg text-base font-medium ${getNavLinkStyle(isActive)}`
                 }
               >
                 <div className="flex items-center">
@@ -228,17 +227,13 @@ export default function MainNavBar() {
               </NavLink>
             ))}
             <div className="flex justify-center space-x-4 pt-4">
-              {socialIcons.map((social, i) => (
+              {SOCIAL_ICONS.map((social, i) => (
                 <a 
                   key={i}
                   href={social.url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className={`p-3 rounded-full transition-all ${
-                    darkMode 
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' 
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
-                  }`}
+                  className={`p-3 rounded-full ${themeClasses.socialIcon}`}
                 >
                   {social.icon}
                 </a>
@@ -249,13 +244,8 @@ export default function MainNavBar() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-8">
-        <div className={`backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 ${
-          darkMode 
-            ? 'bg-gray-900/30 border border-gray-700/30' 
-            : 'bg-white/30 border border-gray-200/30'
-        }`}
-        >
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-8 flex-grow">
+        <div className={`backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 ${themeClasses.mainContent}`}>
           <Routes>
             <Route path='/' element={<Home darkMode={darkMode} />} />
             <Route path='/about' element={<About darkMode={darkMode} />} />
@@ -268,7 +258,21 @@ export default function MainNavBar() {
         </div>
       </main>
 
-      {/* Add this to your tailwind.config.js for dark mode support */}
+      {/* Footer */}
+      <footer className={`py-6 transition-colors duration-500 backdrop-blur-sm ${themeClasses.footer}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-center">
+            <div className="text-sm text-center">
+              <p className="flex items-center justify-center">
+                Made with <FiHeart className="mx-1 text-red-500 animate-pulse" /> by Harsha using Vite+React
+              </p>
+              <p>© {new Date().getFullYear()} DevPortfolio. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Animation styles */}
       <style jsx="true" global="true">{`
         @keyframes float {
           0% { transform: translateY(0) rotate(0deg); }
