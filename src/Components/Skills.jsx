@@ -163,34 +163,39 @@ const ScrollingSkills = ({ skills, darkMode }) => {
   const containerRef = useRef(null);
   const skillContainerRef = useRef(null);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const skillContainer = skillContainerRef.current;
-    if (!container || !skillContainer) return;
+  // In ScrollingSkills.js
+useEffect(() => {
+  const container = containerRef.current;
+  const skillContainer = skillContainerRef.current;
+  if (!container || !skillContainer) return;
 
-    const scrollWidth = skillContainer.scrollWidth / 2;
-    const duration = 20 + (skills.length * 2); // More consistent duration calculation
+  const scrollWidth = skillContainer.scrollWidth / 2;
+  const duration = 20 + (skills.length * 2);
 
-    const sequence = async () => {
-      // Infinite smooth loop
-      await controls.start({
-        x: -scrollWidth,
-        transition: { duration, ease: "linear" }
-      });
-      controls.set({ x: 0 });
-      sequence();
-    };
+  let animationId;
+  let mounted = true;
 
-    // Start the animation
-    const animation = sequence();
+  const animate = async () => {
+    if (!mounted) return;
+    
+    await controls.start({
+      x: -scrollWidth,
+      transition: { duration, ease: "linear" }
+    });
+    
+    if (!mounted) return;
+    controls.set({ x: 0 });
+    animationId = requestAnimationFrame(animate);
+  };
 
-    return () => {
-      // Cleanup animation on unmount
-      if (animation && typeof animation.then === 'function') {
-        animation.then((cancel) => cancel && cancel());
-      }
-    };
-  }, [controls, skills.length]);
+  animationId = requestAnimationFrame(animate);
+
+  return () => {
+    mounted = false;
+    if (animationId) cancelAnimationFrame(animationId);
+    controls.stop();
+  };
+}, [controls, skills.length]);
 
   return (
     <div className="relative overflow-hidden">
