@@ -1,8 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+/* eslint-disable react/no-unknown-property */
 import { motion, useAnimation } from "framer-motion";
 import { useTheme } from "./ThemeContext";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import GitHubCalendar from "react-github-calendar";
 import {
   FaCode, FaServer, FaCloud, FaDatabase, FaTools, FaUsers,
   FaJava, FaPython, FaReact, FaNodeJs, FaAws,
@@ -20,357 +21,336 @@ import { GiBrain } from "react-icons/gi";
 import { BsPeopleFill } from "react-icons/bs";
 
 const SkillsData = {
-  languages: ["C/C++", "Java", "Python", "JavaScript"],
-  fullStacks: ["Spring Boot with React.js", "MERN (MongoDB, Express, React.js, Node.js) Stack", "Python Full Stack with Django"],
-  operatingSystems: ["Linux", "Windows"],
-  versionControl: ["Git", "GitHub"],
-  frontend: ["HTML", "CSS", "JavaScript", "React.js", "Next.js", "Bootstrap", "Tailwind CSS"],
-  backend: ["Spring Boot", "Express.js", "Node.js", "Django", "Microservices"],
-  frameworks: ["Spring Framework", "Flask Framework"],
-  tools: ["Docker", "Postman"],
-  databases: ["MySQL", "MongoDB", "PostgreSQL"],
-  cloud: ["AWS", "Azure", "GCP"],
-  ci_cd: ["Jenkins", "GitHub Actions"],
-  softSkills: ["Teamwork", "Communication", "Problem Solving", "Adaptability", "Time Management", "Leadership", "Collaboration", "Critical Thinking"],
+    languages: ["C/C++", "Java", "Python", "JavaScript"],
+    fullStacks: ["Spring Boot with React.js", "MERN (MongoDB, Express, React.js, Node.js) Stack", "Python Full Stack with Django"],
+    operatingSystems: ["Linux", "Windows"],
+    versionControl: ["Git", "GitHub"],
+    frontend: ["HTML", "CSS", "JavaScript", "React.js", "Next.js", "Bootstrap", "Tailwind CSS"],
+    backend: ["Spring Boot", "Express.js", "Node.js", "Django", "Microservices"],
+    frameworks: ["Spring Framework", "Flask Framework"],
+    tools: ["Docker", "Postman"],
+    databases: ["MySQL", "MongoDB", "PostgreSQL"],
+    cloud: ["AWS", "Azure", "GCP"],
+    ci_cd: ["Jenkins", "GitHub Actions"],
+    softSkills: ["Teamwork", "Communication", "Problem Solving", "Adaptability", "Time Management", "Leadership", "Collaboration", "Critical Thinking"],
 };
 
 const skillIcons = {
-  "C/C++": <FaCode className="text-indigo-600 dark:text-indigo-400" />,
-  "Java": <FaJava className="text-red-600 dark:text-red-400" />,
-  "Python": <FaPython className="text-blue-600 dark:text-blue-400" />,
-  "JavaScript": <DiJavascript className="text-yellow-600 dark:text-yellow-400" />,
-  "Spring Boot with React.js": (
-    <div className="flex items-center">
-      <SiSpring className="text-emerald-600 dark:text-emerald-400 text-xl sm:text-2xl" />
-      <span className="mx-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">+</span>
-      <FaReact className="text-cyan-600 dark:text-cyan-400 text-xl sm:text-2xl" />
-    </div>
-  ),
-  "MERN (MongoDB, Express, React.js, Node.js) Stack": (
-    <div className="flex items-center">
-      <SiMongodb className="text-green-600 dark:text-green-400 text-lg sm:text-xl" />
-      <SiExpress className="text-gray-700 dark:text-gray-500 text-lg sm:text-xl mx-1" />
-      <FaReact className="text-cyan-600 dark:text-cyan-400 text-lg sm:text-xl" />
-      <FaNodeJs className="text-green-700 dark:text-green-500 text-lg sm:text-xl ml-1" />
-    </div>
-  ),
-  "Python Full Stack with Django": (
-    <div className="flex items-center">
-      <FaPython className="text-blue-600 dark:text-blue-400 text-xl sm:text-2xl" />
-      <span className="mx-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">+</span>
-      <SiDjango className="text-green-800 dark:text-green-600 text-xl sm:text-2xl" />
-    </div>
-  ),
-  "HTML": <span className="text-orange-600 dark:text-orange-400">HTML</span>,
-  "CSS": <span className="text-blue-600 dark:text-blue-400">CSS</span>,
-  "React.js": <FaReact className="text-cyan-600 dark:text-cyan-400" />,
-  "Next.js": <SiNextdotjs className="text-gray-800 dark:text-gray-200" />,
-  "Bootstrap": <SiBootstrap className="text-purple-600 dark:text-purple-400" />,
-  "Tailwind CSS": <SiTailwindcss className="text-cyan-600 dark:text-cyan-400" />,
-  "Spring Boot": <SiSpring className="text-emerald-600 dark:text-emerald-400" />,
-  "Express.js": <SiExpress className="text-gray-800 dark:text-gray-200" />,
-  "Node.js": <FaNodeJs className="text-green-700 dark:text-green-500" />,
-  "Django": <SiDjango className="text-green-800 dark:text-green-600" />,
-  "Microservices": <FaServer className="text-violet-600 dark:text-violet-400" />,
-  "MySQL": <SiMysql className="text-blue-700 dark:text-blue-500" />,
-  "MongoDB": <SiMongodb className="text-green-600 dark:text-green-400" />,
-  "PostgreSQL": <SiPostgresql className="text-blue-800 dark:text-blue-600" />,
-  "AWS": <FaAws className="text-amber-600 dark:text-amber-400" />,
-  "Azure": <VscAzureDevops className="text-blue-600 dark:text-blue-400" />,
-  "GCP": <SiGooglecloud className="text-red-600 dark:text-red-400" />,
-  "Jenkins": <SiJenkins className="text-red-600 dark:text-red-400" />,
-  "GitHub Actions": <SiGithub className="text-gray-800 dark:text-gray-200" />,
-  "Docker": <SiDocker className="text-blue-600 dark:text-blue-400" />,
-  "Postman": <SiPostman className="text-orange-600 dark:text-orange-400" />,
-  "Git": <SiGit className="text-orange-700 dark:text-orange-500" />,
-  "GitHub": <SiGithub className="text-gray-800 dark:text-gray-200" />,
-  "VS Code": <DiVisualstudio className="text-blue-600 dark:text-blue-400" />,
-  "Eclipse": <SiEclipseide className="text-purple-700 dark:text-purple-500" />,
-  "PyCharm": <SiPycharm className="text-emerald-700 dark:text-emerald-500" />,
-  "Teamwork": <FaPeopleArrows className="text-indigo-600 dark:text-indigo-400" />,
-  "Communication": <FaComments className="text-emerald-600 dark:text-emerald-400" />,
-  "Problem Solving": <FaLightbulb className="text-amber-500 dark:text-amber-300" />,
-  "Adaptability": <GiBrain className="text-purple-600 dark:text-purple-400" />,
-  "Time Management": <FaClock className="text-rose-600 dark:text-rose-400" />,
-  "Leadership": <BsPeopleFill className="text-indigo-700 dark:text-indigo-500" />,
-  "Collaboration": <FaHandshake className="text-teal-600 dark:text-teal-400" />,
-  "Critical Thinking": <GiBrain className="text-orange-600 dark:text-orange-400" />,
+    // Languages
+    "C/C++": <FaCode className="text-blue-500" />,
+    "Java": <FaJava className="text-red-500" />,
+    "Python": <FaPython className="text-blue-400" />,
+    "JavaScript": <DiJavascript className="text-yellow-400" />,
+    
+    // Tech Stacks
+    "Spring Boot with React.js": (
+      <div className="flex items-center">
+        <SiSpring className="text-green-500 text-2xl" />
+        <span className="mx-1 text-sm">+</span>
+        <FaReact className="text-cyan-500 text-2xl" />
+      </div>
+    ),
+    "MERN (MongoDB, Express, React.js, Node.js) Stack": (
+      <div className="flex items-center">
+        <SiMongodb className="text-green-500 text-xl" />
+        <SiExpress className="text-gray-800 dark:text-white text-xl mx-1" />
+        <FaReact className="text-cyan-500 text-xl" />
+        <FaNodeJs className="text-green-600 text-xl ml-1" />
+      </div>
+    ),
+    "Python Full Stack with Django": (
+      <div className="flex items-center">
+        <FaPython className="text-blue-400 text-2xl" />
+        <span className="mx-1 text-sm">+</span>
+        <SiDjango className="text-green-700 text-2xl" />
+      </div>
+    ),
+    
+    // Frontend
+    "HTML": <span className="text-orange-500">HTML</span>,
+    "CSS": <span className="text-blue-400">CSS</span>,
+    "React.js": <FaReact className="text-cyan-500" />,
+    "Next.js": <SiNextdotjs className="text-gray-800 dark:text-white" />,
+    "Bootstrap": <SiBootstrap className="text-purple-500" />,
+    "Tailwind CSS": <SiTailwindcss className="text-cyan-400" />,
+    
+    // Backend
+    "Spring Boot": <SiSpring className="text-green-500" />,
+    "Express.js": <SiExpress className="text-gray-800 dark:text-white" />,
+    "Node.js": <FaNodeJs className="text-green-600" />,
+    "Django": <SiDjango className="text-green-700" />,
+    "Microservices": <FaServer className="text-purple-400" />,
+    
+    // Databases
+    "MySQL": <SiMysql className="text-blue-600" />,
+    "MongoDB": <SiMongodb className="text-green-500" />,
+    "PostgreSQL": <SiPostgresql className="text-blue-700" />,
+    
+    // Cloud & DevOps
+    "AWS": <FaAws className="text-orange-500" />,
+    "Azure": <VscAzureDevops className="text-blue-500" />,
+    "GCP": <SiGooglecloud className="text-red-500" />,
+    "Jenkins": <SiJenkins className="text-red-400" />,
+    "GitHub Actions": <SiGithub className="text-gray-800 dark:text-white" />,
+    
+    // Tools
+    "Docker": <SiDocker className="text-blue-400" />,
+    "Postman": <SiPostman className="text-orange-500" />,
+    "Git": <SiGit className="text-orange-600" />,
+    "GitHub": <SiGithub className="text-gray-800 dark:text-white" />,
+    
+    // IDEs
+    "VS Code": <DiVisualstudio className="text-blue-500" />,
+    "Eclipse": <SiEclipseide className="text-purple-600" />,
+    "PyCharm": <SiPycharm className="text-green-500" />,
+    
+    // Soft Skills
+    "Teamwork": <FaPeopleArrows className="text-blue-400" />,
+    "Communication": <FaComments className="text-green-400" />,
+    "Problem Solving": <FaLightbulb className="text-yellow-400" />,
+    "Adaptability": <GiBrain className="text-purple-400" />,
+    "Time Management": <FaClock className="text-red-400" />,
+    "Leadership": <BsPeopleFill className="text-indigo-400" />,
+    "Collaboration": <FaHandshake className="text-teal-400" />,
+    "Critical Thinking": <GiBrain className="text-orange-400" />,
 };
 
 const skillCategories = [
-  {
-    title: "Languages",
-    icon: <FaCode className="text-indigo-600 dark:text-indigo-400" />,
-    skills: SkillsData.languages,
-    bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
-    borderColor: "border-indigo-200 dark:border-indigo-800"
-  },
-  {
-    title: "Full Stack",
-    icon: <SiSpring className="text-emerald-600 dark:text-emerald-400" />,
-    skills: SkillsData.fullStacks,
-    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
-    borderColor: "border-emerald-200 dark:border-emerald-800"
-  },
-  {
-    title: "Frontend",
-    icon: <FaReact className="text-cyan-600 dark:text-cyan-400" />,
-    skills: SkillsData.frontend,
-    bgColor: "bg-cyan-50 dark:bg-cyan-900/20",
-    borderColor: "border-cyan-200 dark:border-cyan-800"
-  },
-  {
-    title: "Backend",
-    icon: <FaServer className="text-violet-600 dark:text-violet-400" />,
-    skills: SkillsData.backend,
-    bgColor: "bg-violet-50 dark:bg-violet-900/20",
-    borderColor: "border-violet-200 dark:border-violet-800"
-  },
-  {
-    title: "Databases",
-    icon: <FaDatabase className="text-amber-600 dark:text-amber-400" />,
-    skills: SkillsData.databases,
-    bgColor: "bg-amber-50 dark:bg-amber-900/20",
-    borderColor: "border-amber-200 dark:border-amber-800"
-  },
-  {
-    title: "Cloud & DevOps",
-    icon: <FaCloud className="text-blue-600 dark:text-blue-400" />,
-    skills: [...SkillsData.cloud, ...SkillsData.ci_cd],
-    bgColor: "bg-blue-50 dark:bg-blue-900/20",
-    borderColor: "border-blue-200 dark:border-blue-800"
-  },
-  {
-    title: "Tools & IDEs",
-    icon: <FaTools className="text-rose-600 dark:text-rose-400" />,
-    skills: [...SkillsData.tools, ...SkillsData.versionControl, "VS Code", "Eclipse", "PyCharm"],
-    bgColor: "bg-rose-50 dark:bg-rose-900/20",
-    borderColor: "border-rose-200 dark:border-rose-800"
-  },
-  {
-    title: "Soft Skills",
-    icon: <FaUsers className="text-teal-600 dark:text-teal-400" />,
-    skills: SkillsData.softSkills,
-    bgColor: "bg-teal-50 dark:bg-teal-900/20",
-    borderColor: "border-teal-200 dark:border-teal-800"
-  }
+    {
+      title: "Languages",
+      icon: <FaCode className="text-blue-500" />,
+      skills: SkillsData.languages
+    },
+    {
+      title: "Full Stack",
+      icon: <SiSpring className="text-green-500" />,
+      skills: SkillsData.fullStacks
+    },
+    {
+      title: "Frontend",
+      icon: <FaReact className="text-cyan-500" />,
+      skills: SkillsData.frontend
+    },
+    {
+      title: "Backend",
+      icon: <FaServer className="text-purple-500" />,
+      skills: SkillsData.backend
+    },
+    {
+      title: "Databases",
+      icon: <FaDatabase className="text-yellow-500" />,
+      skills: SkillsData.databases
+    },
+    {
+      title: "Cloud & DevOps",
+      icon: <FaCloud className="text-orange-500" />,
+      skills: [...SkillsData.cloud, ...SkillsData.ci_cd]
+    },
+    {
+      title: "Tools & IDEs",
+      icon: <FaTools className="text-pink-500" />,
+      skills: [...SkillsData.tools, ...SkillsData.versionControl, "VS Code", "Eclipse", "PyCharm"]
+    },
+    {
+      title: "Soft Skills",
+      icon: <FaUsers className="text-teal-500" />,
+      skills: SkillsData.softSkills
+    }
 ];
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-};
 
-const titleVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-};
-
-const skillItemVariants = {
-  hidden: { opacity: 0, x: -10 },
-  visible: (i) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: i * 0.05,
-      duration: 0.3
-    }
-  })
-};
-const SkillCard = ({ category }) => {
+const ScrollingSkills = ({ skills, darkMode }) => {
   const controls = useAnimation();
-  const ref = useRef(null);
-  const { darkMode } = useTheme();
+  const containerRef = useRef(null);
+  const skillContainerRef = useRef(null);
+  const animationRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible");
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1
-      }
-    );
+    const container = containerRef.current;
+    const skillContainer = skillContainerRef.current;
+    if (!container || !skillContainer) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    const scrollWidth = skillContainer.scrollWidth / 2;
+    const duration = 60; // Increased duration for medium speed (higher number = slower)
+
+    const animate = async () => {
+      // Reset position to start if we've scrolled halfway
+      if (container.style.transform && container.style.transform.includes(`-${scrollWidth}px`)) {
+        await controls.set({ x: 0 });
+      }
+      
+      // Animate to the halfway point
+      await controls.start({
+        x: -scrollWidth,
+        transition: { 
+          duration,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "loop"
+        }
+      });
+    };
+
+    animate();
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      controls.stop();
     };
-  }, [controls]);
-
- 
+  }, [controls, skills]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={cardVariants}
-      className={`rounded-xl p-6 shadow-lg ${category.bgColor} border ${category.borderColor} hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
-    >
-      <div className="flex items-center mb-4">
-        <div className={`p-3 rounded-full bg-opacity-20 ${category.icon.props.className.replace('text-', 'bg-')} mr-3`}>
-          {React.cloneElement(category.icon, { className: `${category.icon.props.className} text-2xl` })}
-        </div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100">{category.title}</h3>
-      </div>
-      <ul className="space-y-2">
-        {category.skills.map((skill, index) => (
-          <motion.li
-            key={skill}
-            custom={index}
-            initial="hidden"
-            animate="visible"
-            variants={skillItemVariants}
-            className={`flex items-center py-2 px-3 rounded-md hover:bg-opacity-20 ${
-              darkMode ? 'hover:bg-white/10' : 'hover:bg-black/5'
-            } transition-colors duration-200`}
-          >
-            <span className="mr-2 flex-shrink-0">
-              {skillIcons[skill] || <FaCode className="text-gray-500" />}
-            </span>
-            <span className="text-gray-700 dark:text-gray-300">{skill}</span>
-          </motion.li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-};
-
-export default function Skills() {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const { darkMode } = useTheme();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible");
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [controls]);
-
-
-
-  return (
-    <section 
-      id="skills" 
-      className={`py-16 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${
-        darkMode ? 'bg-gray-900' : 'bg-gray-50'
-      }`}
-    >
+    <div className="relative overflow-hidden">
+      {/* Gradient fade effect on sides */}
+      <div className={`absolute inset-y-0 left-0 w-16 z-10 bg-gradient-to-r ${darkMode ? 'from-gray-900' : 'from-gray-50'}`}></div>
+      <div className={`absolute inset-y-0 right-0 w-16 z-10 bg-gradient-to-l ${darkMode ? 'from-gray-900' : 'from-gray-50'}`}></div>
+      
       <motion.div
-        ref={ref}
-        initial="hidden"
+        ref={containerRef}
         animate={controls}
-        variants={containerVariants}
-        className="max-w-7xl mx-auto"
+        className="flex py-4"
       >
-        <motion.div variants={titleVariants} className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            My Skills
-          </h2>
-          <p className={`max-w-2xl mx-auto text-lg ${
-            darkMode ? 'text-gray-300' : 'text-gray-700'  // Changed from gray-600 to gray-700 for better visibility
-          }`}>
-            Here are the technologies and skills I've worked with throughout my journey as a developer.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {skillCategories.map((category, index) => (
+        <div ref={skillContainerRef} className="flex">
+          {[...skills, ...skills].map((skill, index) => (
             <motion.div
-              key={index}
-              variants={cardVariants}
-              className={`rounded-xl p-6 shadow-lg ${category.bgColor} border ${category.borderColor} hover:shadow-xl transition-all duration-300 hover:scale-[1.02]`}
+              key={`${skill}-${index}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`flex flex-col items-center p-6 rounded-xl min-w-[150px] mx-2 ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'} transition-all duration-300 shadow-lg`}
             >
-              <div className="flex items-center mb-4">
-                <div className={`p-3 rounded-full bg-opacity-20 ${category.icon.props.className.replace('text-', 'bg-')} mr-3`}>
-                  {React.cloneElement(category.icon, { className: `${category.icon.props.className} text-2xl` })}
-                </div>
-                <h3 className={`text-xl font-bold ${
-                  darkMode ? 'text-gray-100' : 'text-gray-800'  // Ensure good contrast in both modes
-                }`}>
-                  {category.title}
-                </h3>
+              <div className="text-4xl mb-3">
+                {skillIcons[skill] || <FaCode />}
               </div>
-              <ul className="space-y-2">
-                {category.skills.map((skill, index) => (
-                  <motion.li
-                    key={skill}
-                    custom={index}
-                    initial="hidden"
-                    animate="visible"
-                    variants={skillItemVariants}
-                    className={`flex items-center py-2 px-3 rounded-md hover:bg-opacity-20 ${
-                      darkMode ? 'hover:bg-white/10' : 'hover:bg-black/5'
-                    } transition-colors duration-200`}
-                  >
-                    <span className="mr-2 flex-shrink-0">
-                      {skillIcons[skill] || <FaCode className="text-gray-500" />}
-                    </span>
-                    <span className={`${
-                      darkMode ? 'text-gray-300' : 'text-gray-700'  // Changed from gray-600 to gray-700
-                    }`}>
-                      {skill}
-                    </span>
-                  </motion.li>
-                ))}
-              </ul>
+              <span className={`text-center font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                {skill}
+              </span>
             </motion.div>
           ))}
         </div>
       </motion.div>
-    </section>
+    </div>
   );
-};
+}
+
+export default function Skills() {
+  const { darkMode } = useTheme();
+
+  return (
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'}`}>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-12"
+      >
+        <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          My <span className={`${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Skills</span>
+        </h1>
+        <p className={`text-lg max-w-2xl mx-auto mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          Technologies and tools I work with to build amazing applications
+        </p>
+        <div className={`w-24 h-1 mx-auto ${darkMode ? 'bg-yellow-400' : 'bg-yellow-500'}`}></div>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto relative z-10 space-y-16">
+        {/* GitHub Contribution Heatmap */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className={`p-6 rounded-2xl shadow-xl ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' : 'bg-white/80 backdrop-blur-md border border-gray-200/30'}`}
+        >
+          <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>My Coding Activity</h2>
+          <div className="flex justify-center overflow-x-auto py-4">
+            <GitHubCalendar
+              username="harshavardana-reddy"
+              blockSize={14}
+              blockMargin={4}
+              fontSize={16}
+              theme={{
+                light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+              }}
+              colorScheme={darkMode ? 'dark' : 'light'}
+            />
+          </div>
+        </motion.div>
+
+        {/* Skills Categories with Scrolling Skills */}
+        {skillCategories.map((category, index) => (
+          <div key={index} className="relative group">
+            <div className="flex items-center mb-6 px-6">
+              <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700/50' : 'bg-gray-100'} mr-4`}>
+                {category.icon}
+              </div>
+              <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                {category.title}
+              </h2>
+            </div>
+            
+            <ScrollingSkills skills={category.skills} darkMode={darkMode} />
+          </div>
+        ))}
+
+       {/* Tech Stack Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className={`p-4 sm:p-8 rounded-2xl shadow-xl ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' : 'bg-white/80 backdrop-blur-md border border-gray-200/30'}`}
+        >
+          <h2 className={`text-xl sm:text-2xl font-bold mb-6 sm:mb-8 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Tech Stack Overview</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {/* Development Tools */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'} mb-3 sm:mb-4 flex items-center`}>
+                <FaCode className="mr-2 text-blue-500 text-lg sm:text-xl" /> Development Tools
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
+                {["VS Code", "Eclipse", "PyCharm", "Git", "GitHub", "Postman"].map((tool, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className={`flex items-center p-3 sm:p-4 rounded-lg ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                  >
+                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'}`}>
+                      {skillIcons[tool]}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'} truncate`}>
+                      {tool}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Cloud & Deployment */}
+            <div className="space-y-4 sm:space-y-6">
+              <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'} mb-3 sm:mb-4 flex items-center`}>
+                <FaCloud className="mr-2 text-orange-500 text-lg sm:text-xl" /> Cloud & Deployment
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
+                {["AWS", "Azure", "GCP", "Docker", "Jenkins", "GitHub Actions"].map((tech, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className={`flex items-center p-3 sm:p-4 rounded-lg ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                  >
+                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'}`}>
+                      {skillIcons[tech]}
+                    </div>
+                    <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'} truncate`}>
+                      {tech}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}

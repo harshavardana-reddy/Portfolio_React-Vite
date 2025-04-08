@@ -10,6 +10,6 @@ const Skills = {
     databases: ["MySQL", "MongoDB", "PostgreSQL"],
     cloud: ["AWS", "Azure", "GCP"],
     ci_cd: ["Jenkins", "GitHub Actions"],
-    softSkills: ["Teamwork", "Communication", "Problem Solving", "Adaptability", "Time Management"],
+    softSkills: ["Teamwork", "Communication", "Problem Solving", "Adaptability", "Time Management", "Leadership", "Collaboration", "Critical Thinking"],
 };
 export default Skills;
