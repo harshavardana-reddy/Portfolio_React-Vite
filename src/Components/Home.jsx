@@ -49,6 +49,7 @@ export default function Home() {
   const [isTyping, setIsTyping] = useState(true);
   const [textIndex, setTextIndex] = useState(0);
   const driveLink = "https://drive.google.com/uc?export=download&id=1bSWY0r3-ZKLTemHFwf8ke6H5KUzpPdXN"
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Typing effect
   useEffect(() => {
@@ -88,13 +89,26 @@ export default function Home() {
 
 
   const handleDownload = () => {
+    setIsDownloading(true);
+    
     const link = document.createElement("a");
     link.href = driveLink;
     link.download = "Pathiputtoor_Harshavardana_Reddy_Resume.pdf";
+    
+    // This ensures the loading state stays until the download actually starts
+    link.onload = () => {
+      setIsDownloading(false);
+    };
+    
+    // Fallback in case onload doesn't fire
+    setTimeout(() => {
+      setIsDownloading(false);
+    }, 10000); // 10 second timeout
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
+};
 
   // Theme-based styles
   const themeClasses = {
@@ -149,6 +163,7 @@ export default function Home() {
             typedText={typedText}
             themeClasses={themeClasses}
             handleDownload={handleDownload}
+            isDownloading={isDownloading}
           />
         </div>
 
@@ -202,7 +217,7 @@ const AnimatedGradientCircles = ({ darkMode, themeClasses }) => (
   </motion.div>
 );
 
-const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload }) => (
+const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload, isDownloading }) => (
     <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -229,14 +244,37 @@ const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload }) =
     </p>
 
     <div className="flex flex-wrap gap-4 mb-8">
-      <motion.button
-        onClick={handleDownload}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className={`flex items-center gap-2 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${themeClasses.primaryButton}`}
-      >
-        <FaFileDownload /> Download Resume
-      </motion.button>
+          <motion.button
+            onClick={handleDownload}
+            whileHover={{ scale: isDownloading ? 1 : 1.05 }}
+            whileTap={{ scale: isDownloading ? 1 : 0.95 }}
+            className={`flex items-center justify-center gap-2 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${themeClasses.primaryButton}`}
+            disabled={isDownloading}
+          >
+            {isDownloading ? (
+              <div className="flex space-x-1">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="w-2 h-2 bg-white rounded-full"
+                    animate={{
+                      y: [0, -5, 0],
+                      opacity: [0.6, 1, 0.6]
+                    }}
+                    transition={{
+                      duration: 1.2,
+                      repeat: Infinity,
+                      delay: i * 0.2
+                    }}
+                  />
+                ))}
+              </div>
+            ) : (
+              <>
+                <FaFileDownload /> Download Resume
+              </>
+            )}
+          </motion.button>
       
       <motion.a
         href="/contact"
