@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { useTheme } from "./ThemeContext";
 import ProjectsData from "../Data/Projects";
-import { FaGithub, FaExternalLinkAlt, FaMusic, FaUniversity, FaUserClock, FaBook, FaCode,FaJava,FaNodeJs } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaMusic, FaUniversity, FaUserClock, FaBook, FaCode,FaJava,FaNodeJs,FaShoppingCart, FaDocker } from "react-icons/fa";
 import { SiDjango, SiReact,  SiSpring, SiRedhat, SiPython, SiHtml5, SiCss3, SiJavascript, SiMongodb, SiMysql, SiPostgresql, SiExpress } from "react-icons/si";
+import { GrSecure } from "react-icons/gr";
+import { FaJenkins } from "react-icons/fa6";
+import { FaAws } from "react-icons/fa6";
+import { SiTerraform } from "react-icons/si";
 
 export default function Projects() {
   const { darkMode } = useTheme();
@@ -65,6 +69,7 @@ export default function Projects() {
     if (title.includes("Employee")) return <FaUserClock className="text-blue-500" />;
     if (title.includes("University")) return <FaUniversity className="text-purple-500" />;
     if (title.includes("Assignment")) return <FaBook className="text-green-500" />;
+    if (title.includes("E-Commerce")) return <FaShoppingCart className="text-orange-500" />;
     return <FaCode className="text-yellow-500" />;
   };
 
@@ -90,6 +95,11 @@ export default function Projects() {
         case 'PostgreSQL': icon = <SiPostgresql className="text-blue-700" />; break;
         case 'Node.js': icon = <FaNodeJs className="text-green-700" />; break;
         case 'Express.js': icon = <SiExpress className="text-yellow-700" />; break;
+        case 'Jwt': icon = <GrSecure className="text-purple-600" />; break;
+        case 'Docker': icon = <FaDocker className="text-blue-500" />; break;
+        case 'Jenkins': icon = <FaJenkins className="text-orange-500" />; break;
+        case 'AWS': icon = <FaAws className="text-yellow-600" />; break;
+        case 'Terraform': icon = <SiTerraform className="text-purple-600" />; break;
         default: icon = <FaCode className="text-gray-500" />;
       }
 

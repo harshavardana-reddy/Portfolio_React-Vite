@@ -4,14 +4,20 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useTheme } from "./ThemeContext";
-import resume from "./media/PATHIPUTTOOR_HARSHAVARDANAREDDY_Resume.pdf";
 import profile from "./media/images/profile.png";
 import { FaGithub, FaLinkedin, FaFileDownload, FaCode, FaServer, FaCloud } from "react-icons/fa";
 import socialLinks from "../Data/Sociallinks";
 
 // Constants for reusable values
-const TYPING_EFFECT_TEXT = "Full Stack Developer & DevOps Engineer";
+const TYPING_EFFECT_TEXTS = [
+  "Full Stack Developer",
+  "DevOps Engineer",
+  "Cloud Enthusiast",
+  "Open Source Contributor"
+];
 const TYPING_SPEED_MS = 100;
+const DELAY_BEFORE_BACKSPACE_MS = 500;
+const DELAY_BEFORE_NEXT_TEXT_MS = 500;
 
 const FLOATING_ICONS = [
   { icon: <FaCode className="text-blue-400" size={24} />, text: "Frontend", bg: "bg-blue-500/20" },
@@ -40,22 +46,50 @@ export default function Home() {
   const { darkMode } = useTheme();
   const [typedText, setTypedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  const [textIndex, setTextIndex] = useState(0);
+  const driveLink = "https://drive.google.com/uc?export=download&id=1bSWY0r3-ZKLTemHFwf8ke6H5KUzpPdXN"
 
   // Typing effect
   useEffect(() => {
-    if (currentIndex < TYPING_EFFECT_TEXT.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(prev => prev + TYPING_EFFECT_TEXT[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, TYPING_SPEED_MS);
-
-      return () => clearTimeout(timeout);
+    let timeout;
+    
+    if (isTyping) {
+      // Typing forward
+      if (currentIndex < TYPING_EFFECT_TEXTS[textIndex].length) {
+        timeout = setTimeout(() => {
+          setTypedText(prev => prev + TYPING_EFFECT_TEXTS[textIndex][currentIndex]);
+          setCurrentIndex(prev => prev + 1);
+        }, TYPING_SPEED_MS);
+      } else {
+        // Finished typing current text, wait then start backspacing
+        timeout = setTimeout(() => {
+          setIsTyping(false);
+        }, DELAY_BEFORE_BACKSPACE_MS);
+      }
+    } else {
+      // Backspacing
+      if (currentIndex > 0) {
+        timeout = setTimeout(() => {
+          setTypedText(prev => prev.slice(0, -1));
+          setCurrentIndex(prev => prev - 1);
+        }, TYPING_SPEED_MS / 2); // Faster backspacing
+      } else {
+        // Finished backspacing, move to next text
+        timeout = setTimeout(() => {
+          setTextIndex((prev) => (prev + 1) % TYPING_EFFECT_TEXTS.length);
+          setIsTyping(true);
+        }, DELAY_BEFORE_NEXT_TEXT_MS);
+      }
     }
-  }, [currentIndex]);
+
+    return () => clearTimeout(timeout);
+  }, [currentIndex, isTyping, textIndex]);
+
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = resume;
+    link.href = driveLink;
     link.download = "Pathiputtoor_Harshavardana_Reddy_Resume.pdf";
     document.body.appendChild(link);
     link.click();
@@ -169,7 +203,7 @@ const AnimatedGradientCircles = ({ darkMode, themeClasses }) => (
 );
 
 const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload }) => (
-  <motion.div
+    <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8 }}
@@ -184,7 +218,7 @@ const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload }) =
       <h2 className="text-2xl md:text-3xl font-semibold">
         <span className={`text-transparent bg-clip-text ${themeClasses.titleGradient}`}>
           {typedText}
-          <span className={`ml-1 inline-block w-1 h-8 ${themeClasses.cursor} animate-blink`}>|</span>
+          <span className={`ml-1 inline-block w-1 h-8 ${themeClasses.cursor}`}>|</span>
         </span>
       </h2>
     </div>
@@ -346,11 +380,6 @@ const GlobalStyles = () => (
       100% { transform: translate(0px, 0px) scale(1); }
     }
     
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    
     @keyframes text-glow {
       0% { text-shadow: 0 0 5px rgba(234, 179, 8, 0.5); }
       50% { text-shadow: 0 0 20px rgba(234, 179, 8, 0.8); }
@@ -359,10 +388,6 @@ const GlobalStyles = () => (
     
     .animate-blob {
       animation: blob 7s infinite;
-    }
-    
-    .animate-blink {
-      animation: blink 1s infinite;
     }
     
     .animate-text-glow {

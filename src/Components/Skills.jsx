@@ -161,36 +161,41 @@ const skillCategories = [
 const ScrollingSkills = ({ skills, darkMode }) => {
   const controls = useAnimation();
   const containerRef = useRef(null);
-  const skillContainerRef = useRef(null);
-  const animationRef = useRef(null);
+  const isHovered = useRef(false);
 
   useEffect(() => {
     const container = containerRef.current;
-    const skillContainer = skillContainerRef.current;
-    if (!container || !skillContainer) return;
+    if (!container) return;
 
-    const scrollWidth = skillContainer.scrollWidth / 2;
-    const duration = 60; // Increased duration for medium speed (higher number = slower)
+    const skillElements = container.querySelectorAll('div > div');
+    if (skillElements.length === 0) return;
 
-    const animate = async () => {
-      // Reset position to start if we've scrolled halfway
-      if (container.style.transform && container.style.transform.includes(`-${scrollWidth}px`)) {
+    let totalWidth = 0;
+    skillElements.forEach(el => {
+      const style = window.getComputedStyle(el);
+      totalWidth += el.offsetWidth + parseInt(style.marginLeft) + parseInt(style.marginRight);
+    });
+
+    const scrollDistance = totalWidth / 2;
+
+    const sequence = async () => {
+      // Only animate if not hovered
+      if (!isHovered.current) {
         await controls.set({ x: 0 });
+        await controls.start({
+          x: -scrollDistance,
+          transition: {
+            duration: scrollDistance / 50,
+            ease: "linear",
+            repeat: Infinity,
+            repeatType: "loop",
+            repeatDelay: 0
+          }
+        });
       }
-      
-      // Animate to the halfway point
-      await controls.start({
-        x: -scrollWidth,
-        transition: { 
-          duration,
-          ease: "linear",
-          repeat: Infinity,
-          repeatType: "loop"
-        }
-      });
     };
 
-    animate();
+    sequence();
 
     return () => {
       controls.stop();
@@ -198,69 +203,124 @@ const ScrollingSkills = ({ skills, darkMode }) => {
   }, [controls, skills]);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden py-4">
       {/* Gradient fade effect on sides */}
-      <div className={`absolute inset-y-0 left-0 w-16 z-10 bg-gradient-to-r ${darkMode ? 'from-gray-900' : 'from-gray-50'}`}></div>
-      <div className={`absolute inset-y-0 right-0 w-16 z-10 bg-gradient-to-l ${darkMode ? 'from-gray-900' : 'from-gray-50'}`}></div>
+      <div className={`absolute inset-y-0 left-0 w-16 z-10 pointer-events-none bg-gradient-to-r ${
+        darkMode ? 'from-gray-900 via-gray-900/80 to-transparent' : 'from-gray-50 via-gray-50/80 to-transparent'
+      }`}></div>
+      <div className={`absolute inset-y-0 right-0 w-16 z-10 pointer-events-none bg-gradient-to-l ${
+        darkMode ? 'from-gray-900 via-gray-900/80 to-transparent' : 'from-gray-50 via-gray-50/80 to-transparent'
+      }`}></div>
       
       <motion.div
         ref={containerRef}
         animate={controls}
-        className="flex py-4"
+        className="flex"
+        style={{ willChange: 'transform' }}
+        onHoverStart={() => {
+          isHovered.current = true;
+          controls.stop();
+        }}
+        onHoverEnd={() => {
+          isHovered.current = false;
+          // Restart animation when hover ends
+          const container = containerRef.current;
+          if (container) {
+            const currentX = parseInt(container.style.transform?.split('(')[1]?.split('px)')[0]) || 0;
+            controls.start({
+              x: -container.scrollWidth / 2,
+              transition: {
+                from: currentX,
+                duration: (container.scrollWidth / 2 - Math.abs(currentX)) / 50,
+                ease: "linear",
+                repeat: Infinity,
+                repeatType: "loop",
+                repeatDelay: 0
+              }
+            });
+          }
+        }}
       >
-        <div ref={skillContainerRef} className="flex">
-          {[...skills, ...skills].map((skill, index) => (
-            <motion.div
-              key={`${skill}-${index}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex flex-col items-center p-6 rounded-xl min-w-[150px] mx-2 ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-white hover:bg-gray-100'} transition-all duration-300 shadow-lg`}
-            >
-              <div className="text-4xl mb-3">
-                {skillIcons[skill] || <FaCode />}
-              </div>
-              <span className={`text-center font-medium ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
-                {skill}
-              </span>
-            </motion.div>
-          ))}
-        </div>
+        {[...skills, ...skills, ...skills].map((skill, index) => (
+          <motion.div
+            key={`${skill}-${index}`}
+            className={`flex-shrink-0 flex flex-col items-center p-4 rounded-xl w-[150px] mx-2 ${
+              darkMode 
+                ? 'bg-gray-700/50 hover:bg-gray-700/80' 
+                : 'bg-white hover:bg-gray-100'
+            } transition-all duration-300 shadow-lg border ${
+              darkMode 
+                ? 'border-gray-600/30' 
+                : 'border-gray-200'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="text-4xl mb-3">
+              {skillIcons[skill] || <FaCode />}
+            </div>
+            <span className={`text-center font-medium text-sm ${
+              darkMode ? 'text-gray-200' : 'text-gray-700'
+            }`}>
+              {skill}
+            </span>
+          </motion.div>
+        ))}
       </motion.div>
     </div>
   );
-}
+};
 
 export default function Skills() {
   const { darkMode } = useTheme();
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'}`}>
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+      darkMode 
+        ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' 
+        : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'
+    }`}>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="text-center mb-12"
       >
-        <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+        <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
+          darkMode ? 'text-white' : 'text-gray-900'
+        }`}>
           My <span className={`${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Skills</span>
         </h1>
-        <p className={`text-lg max-w-2xl mx-auto mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-lg max-w-2xl mx-auto mb-6 ${
+          darkMode ? 'text-gray-300' : 'text-gray-600'
+        }`}>
           Technologies and tools I work with to build amazing applications
         </p>
-        <div className={`w-24 h-1 mx-auto ${darkMode ? 'bg-yellow-400' : 'bg-yellow-500'}`}></div>
+        <motion.div 
+          className={`w-24 h-1 mx-auto ${darkMode ? 'bg-yellow-400' : 'bg-yellow-500'}`}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
       </motion.div>
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-16">
         {/* GitHub Contribution Heatmap */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className={`p-6 rounded-2xl shadow-xl ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' : 'bg-white/80 backdrop-blur-md border border-gray-200/30'}`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          className={`p-6 rounded-2xl shadow-xl ${
+            darkMode 
+              ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' 
+              : 'bg-white/80 backdrop-blur-md border border-gray-200/30'
+          }`}
         >
-          <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>My Coding Activity</h2>
+          <h2 className={`text-2xl font-bold mb-6 ${
+            darkMode ? 'text-yellow-300' : 'text-yellow-600'
+          }`}>My Coding Activity</h2>
           <div className="flex justify-center overflow-x-auto py-4">
             <GitHubCalendar
               username="harshavardana-reddy"
@@ -278,34 +338,55 @@ export default function Skills() {
 
         {/* Skills Categories with Scrolling Skills */}
         {skillCategories.map((category, index) => (
-          <div key={index} className="relative group">
+          <motion.div 
+            key={index} 
+            className="relative group"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          >
             <div className="flex items-center mb-6 px-6">
-              <div className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700/50' : 'bg-gray-100'} mr-4`}>
+              <motion.div 
+                className={`p-3 rounded-lg ${darkMode ? 'bg-gray-700/50' : 'bg-gray-100'} mr-4`}
+                whileHover={{ rotate: 5, scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 {category.icon}
-              </div>
-              <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+              </motion.div>
+              <h2 className={`text-2xl font-bold ${
+                darkMode ? 'text-white' : 'text-gray-800'
+              }`}>
                 {category.title}
               </h2>
             </div>
             
             <ScrollingSkills skills={category.skills} darkMode={darkMode} />
-          </div>
+          </motion.div>
         ))}
 
-       {/* Tech Stack Section */}
+        {/* Tech Stack Section */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className={`p-4 sm:p-8 rounded-2xl shadow-xl ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' : 'bg-white/80 backdrop-blur-md border border-gray-200/30'}`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          className={`p-4 sm:p-8 rounded-2xl shadow-xl ${
+            darkMode 
+              ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' 
+              : 'bg-white/80 backdrop-blur-md border border-gray-200/30'
+          }`}
         >
-          <h2 className={`text-xl sm:text-2xl font-bold mb-6 sm:mb-8 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Tech Stack Overview</h2>
+          <h2 className={`text-xl sm:text-2xl font-bold mb-6 sm:mb-8 ${
+            darkMode ? 'text-yellow-300' : 'text-yellow-600'
+          }`}>Tech Stack Overview</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Development Tools */}
             <div className="space-y-4 sm:space-y-6">
-              <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'} mb-3 sm:mb-4 flex items-center`}>
+              <h3 className={`text-lg sm:text-xl font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-800'
+              } mb-3 sm:mb-4 flex items-center`}>
                 <FaCode className="mr-2 text-blue-500 text-lg sm:text-xl" /> Development Tools
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -313,12 +394,26 @@ export default function Skills() {
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.05 }}
-                    className={`flex items-center p-3 sm:p-4 rounded-lg ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className={`flex items-center p-3 sm:p-4 rounded-lg ${
+                      darkMode 
+                        ? 'bg-gray-700/50 hover:bg-gray-700' 
+                        : 'bg-gray-100 hover:bg-gray-200'
+                    } border ${
+                      darkMode 
+                        ? 'border-gray-600/30' 
+                        : 'border-gray-200'
+                    }`}
                   >
-                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'}`}>
+                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${
+                      darkMode ? 'bg-gray-600/50' : 'bg-white'
+                    }`}>
                       {skillIcons[tool]}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'} truncate`}>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      darkMode ? 'text-white' : 'text-gray-800'
+                    } truncate`}>
                       {tool}
                     </span>
                   </motion.div>
@@ -328,7 +423,9 @@ export default function Skills() {
 
             {/* Cloud & Deployment */}
             <div className="space-y-4 sm:space-y-6">
-              <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'} mb-3 sm:mb-4 flex items-center`}>
+              <h3 className={`text-lg sm:text-xl font-semibold ${
+                darkMode ? 'text-white' : 'text-gray-800'
+              } mb-3 sm:mb-4 flex items-center`}>
                 <FaCloud className="mr-2 text-orange-500 text-lg sm:text-xl" /> Cloud & Deployment
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -336,12 +433,26 @@ export default function Skills() {
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.05 }}
-                    className={`flex items-center p-3 sm:p-4 rounded-lg ${darkMode ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className={`flex items-center p-3 sm:p-4 rounded-lg ${
+                      darkMode 
+                        ? 'bg-gray-700/50 hover:bg-gray-700' 
+                        : 'bg-gray-100 hover:bg-gray-200'
+                    } border ${
+                      darkMode 
+                        ? 'border-gray-600/30' 
+                        : 'border-gray-200'
+                    }`}
                   >
-                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'}`}>
+                    <div className={`p-2 sm:p-3 rounded-lg mr-3 ${
+                      darkMode ? 'bg-gray-600/50' : 'bg-white'
+                    }`}>
                       {skillIcons[tech]}
                     </div>
-                    <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'} truncate`}>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      darkMode ? 'text-white' : 'text-gray-800'
+                    } truncate`}>
                       {tech}
                     </span>
                   </motion.div>

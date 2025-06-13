@@ -1,20 +1,26 @@
 const Education = {
     BTech: {
         name: "B.Tech in Computer Science and Engineering - Honors",
-        institution: "K L University, Vijayawada",
+        status:"Pursuing",
+        institution: "K L University",
+        location:"Vijayawada, Andhra Pradesh, India",
         year: { start: 2022, end: 2026 },
-        grade: "9.48 CGPA",
+        grade: "9.5 CGPA",
     },
     Intermediate: {
         name: "Intermediate - MPC",
-        institution: "BIIT Junior College, Guntur",
+        status: "Completed",
+        institution: "BIIT Junior College",
+        location: "Guntur, Andhra Pradesh, India",
         year: { start: 2020, end: 2022 },
         grade: "83%",
     },
     SSC: {
         name: "Secondary School Certificate",
-        institution: "Bhashyam E.M High School, Vijayawada",
-        year: 2020, // Kept as single number
+        status: "Completed",
+        institution: "Bhashyam E.M High School",
+        location: "Vijayawada, Andhra Pradesh, India",
+        year: { start: 2019, end: 2020 },
         grade: "10 GPA",
     }
 }
