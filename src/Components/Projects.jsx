@@ -2,11 +2,10 @@ import { motion } from "framer-motion";
 import { useTheme } from "./ThemeContext";
 import ProjectsData from "../Data/Projects";
 import { FaGithub, FaExternalLinkAlt, FaMusic, FaUniversity, FaUserClock, FaBook, FaCode,FaJava,FaNodeJs,FaShoppingCart, FaDocker } from "react-icons/fa";
-import { SiDjango, SiReact,  SiSpring, SiRedhat, SiPython, SiHtml5, SiCss3, SiJavascript, SiMongodb, SiMysql, SiPostgresql, SiExpress } from "react-icons/si";
+import { SiDjango, SiReact,  SiSpring, SiRedhat, SiPython, SiHtml5, SiCss3, SiJavascript, SiMongodb, SiMysql, SiPostgresql, SiExpress, SiTerraform  } from "react-icons/si";
 import { GrSecure } from "react-icons/gr";
-import { FaJenkins } from "react-icons/fa6";
-import { FaAws } from "react-icons/fa6";
-import { SiTerraform } from "react-icons/si";
+import { FaJenkins, FaAws } from "react-icons/fa6";
+
 
 export default function Projects() {
   const { darkMode } = useTheme();
