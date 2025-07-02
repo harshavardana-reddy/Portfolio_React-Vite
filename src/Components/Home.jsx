@@ -18,8 +18,8 @@ const TYPING_EFFECT_TEXTS = [
   "Open Source Contributor"
 ];
 const TYPING_SPEED_MS = 50;
-const DELAY_BEFORE_BACKSPACE_MS = 150;  // Increased delay
-const DELAY_BEFORE_NEXT_TEXT_MS = 500;
+const DELAY_BEFORE_BACKSPACE_MS = 250;  // Increased delay
+const DELAY_BEFORE_NEXT_TEXT_MS = 400;
 
 const FLOATING_ICONS = [
   { 
