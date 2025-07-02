@@ -1,24 +1,13 @@
 import { motion } from "framer-motion";
 import { FiAward, FiMapPin } from "react-icons/fi";
-import { FaGraduationCap, FaSchool, FaUniversity } from "react-icons/fa";
-import { MdSchool, MdTimeline } from "react-icons/md";
+import { MdTimeline } from "react-icons/md";
 import { useTheme } from "./ThemeContext";
 import EducationData from "../Data/Education";
 
 const Education = () => {
   const { darkMode } = useTheme();
   const educationItems = Object.values(EducationData);
-
-  const getEducationIcon = (educationType) => {
-    const icons = {
-      BTech: <FaUniversity className="w-6 h-6" />,
-      Intermediate: <MdSchool className="w-6 h-6" />,
-      SSC: <FaSchool className="w-6 h-6" />,
-      default: <FaGraduationCap className="w-6 h-6" />
-    };
-    
-    return icons[educationType] || icons.default;
-  };
+  // const educationKeys = Object.keys(EducationData);
 
   // Animation variants
   const container = {
@@ -124,13 +113,21 @@ const Education = () => {
                   }`}>
                     {/* Header */}
                     <div className="flex items-start gap-5 mb-5">
-                      <div className={`p-3.5 rounded-xl ${
+                      {/* Institution Logo */}
+                      <div className={`p-1.5 rounded-xl ${
                         darkMode 
-                          ? "bg-gray-800 text-teal-400" 
-                          : "bg-gray-100 text-teal-600"
+                          ? "bg-gray-800" 
+                          : "bg-gray-100"
                       }`}>
-                        {getEducationIcon(Object.keys(EducationData)[index])}
+                        <div className="w-14 h-14 rounded-lg overflow-hidden">
+                          <img 
+                            src={edu.logo} 
+                            alt={`${edu.institution} logo`}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
                       </div>
+                      
                       <div className="flex-1">
                         <div className="flex items-center justify-between flex-wrap gap-2">
                           <h3 className={`text-xl font-bold ${

@@ -1,3 +1,6 @@
+import Image1 from "../assets/edu_logos/BHASHYAM.png";
+import Image2 from "../assets/edu_logos/BIIT.jpg";
+import Image3 from "../assets/edu_logos/KLU.png";
 const Education = {
     BTech: {
         name: "B.Tech in Computer Science and Engineering - Honors",
@@ -6,6 +9,7 @@ const Education = {
         location:"Vijayawada, Andhra Pradesh, India",
         year: { start: 2022, end: 2026 },
         grade: "9.5 CGPA",
+        logo:Image3
     },
     Intermediate: {
         name: "Intermediate - MPC",
@@ -14,6 +18,7 @@ const Education = {
         location: "Guntur, Andhra Pradesh, India",
         year: { start: 2020, end: 2022 },
         grade: "83%",
+        logo:Image2
     },
     SSC: {
         name: "Secondary School Certificate",
@@ -22,6 +27,7 @@ const Education = {
         location: "Vijayawada, Andhra Pradesh, India",
         year: { start: 2019, end: 2020 },
         grade: "10 GPA",
+        logo:Image1
     }
 }
 
