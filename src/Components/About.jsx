@@ -202,7 +202,7 @@ const ExperienceSection = ({ darkMode }) => (
     viewport={{ once: true }}
     className={`p-8 rounded-2xl shadow-xl ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30' : 'bg-white/80 backdrop-blur-md border border-gray-200/30'}`}
   >
-    <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Experience</h2>
+    <h2 className={`text-2xl font-bold mb-6 ${darkMode ? 'text-yellow-300' : 'text-yellow-600'}`}>Position of Responsibilities</h2>
     <div>
       <h3 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'}`}>{EXPERIENCE.role}</h3>
       <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{EXPERIENCE.institution}</p>
@@ -242,6 +242,15 @@ const CertificationsSection = ({ darkMode }) => (
           </div>
         </motion.div>
       ))}
+      <span
+        className={`col-span-full flex justify-center items-center mt-4 px-4 py-2 rounded-lg font-semibold text-center
+          ${darkMode
+            ? 'bg-yellow-900/70 text-yellow-200 border border-yellow-600'
+            : 'bg-yellow-100 text-yellow-800 border border-yellow-300'
+          }`}
+      >
+        * To verify the Certifications navigate to Certifications Tab.
+      </span>
     </div>
   </motion.div>
 );
