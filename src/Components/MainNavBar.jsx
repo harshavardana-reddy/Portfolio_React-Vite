@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import { useState, useEffect } from 'react';
 import { Route, Routes, NavLink } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiHome, FiUser, FiBook, FiCode, FiLayers, FiMail, FiSun, FiMoon, FiGithub, FiLinkedin, FiX } from 'react-icons/fi';
 import { PiCertificateBold } from "react-icons/pi";
 import Home from './Home';
@@ -31,20 +32,60 @@ const socialIcons = [
   { icon: <FiLinkedin size={18} />, url: socialLinks.LinkedIn },
 ];
 
+const AnimatedNavLink = ({ to, icon, name, darkMode, onClick }) => {
+  return (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={({ isActive }) => 
+        `relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300 flex items-center ${
+          isActive 
+            ? darkMode 
+              ? 'text-white' 
+              : 'text-gray-900'
+            : darkMode 
+              ? 'text-gray-300 hover:text-white' 
+              : 'text-gray-600 hover:text-gray-900'
+        }`
+      }
+    >
+      {({ isActive }) => (
+        <>
+          <span className="mr-2 z-10">{icon}</span>
+          <span className="z-10">{name}</span>
+          {isActive && (
+            <motion.span 
+              layoutId="navIndicator"
+              className={`absolute inset-0 rounded-full ${
+                darkMode 
+                  ? 'bg-gray-800/50' 
+                  : 'bg-white/80'
+              }`}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 30
+              }}
+            />
+          )}
+        </>
+      )}
+    </NavLink>
+  );
+};
+
 export default function MainNavBar() {
   const { darkMode, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Scroll effect
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    // Apply theme to document
     document.documentElement.classList.toggle('dark', darkMode);
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
@@ -114,26 +155,15 @@ export default function MainNavBar() {
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
-                <NavLink
+                <AnimatedNavLink
                   key={item.name}
                   to={item.path}
-                  className={({ isActive }) => 
-                    `relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 flex items-center ${
-                      isActive 
-                        ? darkMode 
-                          ? 'text-white bg-gray-800/50' 
-                          : 'text-gray-900 bg-white/80'
-                        : darkMode 
-                          ? 'text-gray-300 hover:text-white hover:bg-gray-800/30' 
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
-                    }`
-                  }
-                >
-                  <span className="mr-2">{item.icon}</span>
-                  {item.name}
-                </NavLink>
+                  icon={item.icon}
+                  name={item.name}
+                  darkMode={darkMode}
+                />
               ))}
             </div>
             
@@ -208,27 +238,14 @@ export default function MainNavBar() {
           }`}
           >
             {navItems.map((item) => (
-              <NavLink
+              <AnimatedNavLink
                 key={item.name}
                 to={item.path}
+                icon={item.icon}
+                name={item.name}
+                darkMode={darkMode}
                 onClick={closeMobileMenu}
-                className={({ isActive }) => 
-                  `block px-4 py-3 rounded-lg text-base font-medium transition-all ${
-                    isActive 
-                      ? darkMode 
-                        ? 'text-white bg-gray-800/50' 
-                        : 'text-gray-900 bg-white/80'
-                      : darkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800/30' 
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-white/60'
-                  }`
-                }
-              >
-                <div className="flex items-center">
-                  <span className="mr-3">{item.icon}</span>
-                  {item.name}
-                </div>
-              </NavLink>
+              />
             ))}
             <div className="flex justify-center space-x-4 pt-4">
               {socialIcons.map((social, i) => (
@@ -251,7 +268,7 @@ export default function MainNavBar() {
         </div>
       </nav>
 
-      {/* Main Content */}
+      {/* Main Content with Page Transitions */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-8">
         <div className={`backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 ${
           darkMode 
@@ -259,15 +276,80 @@ export default function MainNavBar() {
             : 'bg-white/30 border border-gray-200/30'
         }`}
         >
-          <Routes>
-            <Route path='/' element={<Home darkMode={darkMode} />} />
-            <Route path='/about' element={<About darkMode={darkMode} />} />
-            <Route path='/education' element={<Education darkMode={darkMode} />} />
-            <Route path="/certifications" element={<Certifications/>} />
-            <Route path='/skills' element={<Skills darkMode={darkMode} />} />
-            <Route path='/projects' element={<Projects darkMode={darkMode} />} />
-            <Route path='/contact' element={<Contact darkMode={darkMode} />} />
-          </Routes>
+          <AnimatePresence mode='wait'>
+            <Routes>
+              <Route path='/' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Home darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path='/about' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <About darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path='/education' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Education darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path="/certifications" element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Certifications darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path='/skills' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Skills darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path='/projects' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Projects darkMode={darkMode} />
+                </motion.div>
+              } />
+              <Route path='/contact' element={
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Contact darkMode={darkMode} />
+                </motion.div>
+              } />
+            </Routes>
+          </AnimatePresence>
         </div>
       </main>
 
@@ -292,7 +374,6 @@ export default function MainNavBar() {
         </div>
       </footer>
 
-      {/* Add this to your tailwind.config.js for dark mode support */}
       <style jsx="true" global="true">{`
         @keyframes float {
           0% { transform: translateY(0) rotate(0deg); }
