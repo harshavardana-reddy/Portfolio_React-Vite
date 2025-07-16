@@ -32,7 +32,7 @@ const FLOATING_ICONS = [
     icon: <FaServer className="text-green-400" size={24} />, 
     text: "Backend", 
     bg: "bg-green-500/20",
-    skills: ["Node.js", "Express", "Django", "FastAPI"]
+    skills: ["Spring-Boot","Node.js", "Express", "Django", "FastAPI"]
   },
   { 
     icon: <FaCloud className="text-purple-400" size={24} />, 
@@ -380,7 +380,7 @@ const FloatingBadge = ({ item, index, darkMode, isHovered, onHoverStart, onHover
       case 0: return 'top-0 left-0';          // Frontend (top-left)
       case 1: return 'top-1/2 -left-6';       // Backend (middle-left)
       case 2: return '-bottom-6 left-1/4';     // DevOps (bottom-left-center)
-      case 3: return 'top-1/3 -right-12';         // Open Source (middle-right)
+      case 3: return 'top-1/4 -right-11';         // Open Source (middle-right)
       default: return 'bottom-0 right-0';      // Fallback position
     }
   };
