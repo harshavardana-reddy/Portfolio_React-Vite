@@ -5,7 +5,8 @@ const Projects = [
         techStack:"React.js,Node.js,Express.js,MongoDB,Docker,Jenkins,Bash-Scripting,Docker-Compose,Terraform,AWS,Jwt",
         gitLink:"https://github.com/harshavardana-reddy/CD_PROJECT.git",
         thumbnail:"",
-        duration:"January 2025 - May 2025"
+        duration:"January 2025 - May 2025",
+        projectImages:"../assets/projects/ecom/*.png"
     },
     {
         title:"Online Assignment And Grading System",
@@ -13,7 +14,8 @@ const Projects = [
         techStack:"Java,Spring Boot,MySQL,React.js,Jwt",
         gitLink:"https://github.com/harshavardana-reddy/JFSD_SDP_PROJECT_T_25",
         thumbnail:"",
-        duration:"September 2024 - December 2024"
+        duration:"September 2024 - December 2024",
+        projectImages:"../assets/projects/oags/*.png"
     },
     {
         title:"University Event Management System",
@@ -21,7 +23,8 @@ const Projects = [
         techStack:"Java,JBOSS EAP,MySQL,JSP(Java Server Pages),CSS,JavaScript",
         gitLink:"https://github.com/harshavardana-reddy/University-Event-Mangement-JavaEE-Maven",
         thumbnail:"",
-        duration:"June 2024 - July 2024"
+        duration:"June 2024 - July 2024",
+        projectImages:"../assets/projects/uems/*.png"
     },
     {
         title:"Employee Leave Management System",
@@ -29,7 +32,8 @@ const Projects = [
         techStack:"React.js,Node.js,Express.js,MongoDB,Jwt",
         gitLink:"https://github.com/harshavardana-reddy/ELMS_DEPLOY_SDP-S14-15",
         thumbnail:"",
-        duration:"January 2024 - April 2024"
+        duration:"January 2024 - April 2024",
+        projectImages:"../assets/projects/elms/*.png"
     },
     {
         title:"MUSIC STREAMING SERVICE",
@@ -37,7 +41,8 @@ const Projects = [
         techStack:"Python,Django,html,CSS,JavaScript,PostgreSQL",
         gitLink:"https://github.com/harshavardana-reddy/Music_Streaming_Services_Django",
         thumbnail:"",
-        duration:"October 2023 - November 2023"
+        duration:"October 2023 - November 2023",
+        projectImages:"../assets/projects/mss/*.png"
     }
     
 ]
