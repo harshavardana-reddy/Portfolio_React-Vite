@@ -15,13 +15,13 @@ const EDUCATION = [
     degree: "B.TECH IN COMPUTER SCIENCE AND ENGINEERING (HONORS)",
     institution: "K.L Deemed To Be University, Vaddeswaram",
     period: "Expected in 07/2026",
-    gpa: "GPA: 9.4"
+    gpa: "CGPA: 9.5"
   },
   {
     degree: "INTERMEDIATE",
     institution: "BIIT Junior College, Guntur",
     period: "03/2022",
-    gpa: "GPA: 8.3"
+    gpa: "Percentage : 83%"
   },
   {
     degree: "SSC",
@@ -34,7 +34,7 @@ const EDUCATION = [
 const EXPERIENCE = {
   role: "Student and Subject Peer Mentor",
   institution: "KL University, Vaddeswaram, India",
-  period: "08/2023 to Current",
+  period: "08/2023 to 05/2025",
   description: "Working as a student and subject peer-mentor at K L University."
 };
 
