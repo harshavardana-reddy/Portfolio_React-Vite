@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 import { useState, useEffect } from 'react';
 import { Route, Routes, NavLink } from 'react-router-dom';
@@ -362,7 +363,7 @@ export default function MainNavBar() {
                 <span className="relative mx-1">
                   <SiVite className={`text-[#ffd028] animate-bounce ${darkMode ? 'drop-shadow-[0_0_4px_#ffd02880]' : 'drop-shadow-[0_0_4px_#ffd028]'}`} />
                 </span>
-                Vite+ 
+                Vite&nbsp;+ 
                 <span className="relative mx-1">
                   <FaReact className={`text-[#61dafb] animate-spin-slow ${darkMode ? 'drop-shadow-[0_0_4px_#61dafb80]' : 'drop-shadow-[0_0_4px_#61dafb]'}`} />
                 </span>
