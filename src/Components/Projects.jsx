@@ -29,6 +29,28 @@ import ecom20 from "../assets/projects/ecom/Screenshot (2875).png"
 import ecom21 from "../assets/projects/ecom/Screenshot (2876).png"
 import ecom22 from "../assets/projects/ecom/Screenshot (2877).png"
 import ecom23 from "../assets/projects/ecom/Screenshot (2878).png"
+import ecom24 from "../assets/projects/ecom/Screenshot (2879).png"
+import ecom25 from "../assets/projects/ecom/Screenshot (2880).png"
+import ecom26 from "../assets/projects/ecom/Screenshot (2881).png"
+import ecom27 from "../assets/projects/ecom/Screenshot (2882).png"
+import ecom28 from "../assets/projects/ecom/Screenshot (2883).png"
+import ecom29 from "../assets/projects/ecom/Screenshot (2884).png"
+import ecom30 from "../assets/projects/ecom/Screenshot (2885).png"
+import ecom31 from "../assets/projects/ecom/Screenshot (2886).png"
+import ecom32 from "../assets/projects/ecom/Screenshot (2887).png"
+import ecom33 from "../assets/projects/ecom/Screenshot (2888).png"
+import ecom34 from "../assets/projects/ecom/Screenshot (2889).png"
+import ecom35 from "../assets/projects/ecom/Screenshot (2890).png"
+import ecom36 from "../assets/projects/ecom/Screenshot (2891).png"
+import ecom37 from "../assets/projects/ecom/Screenshot (2892).png"
+import ecom38 from "../assets/projects/ecom/Screenshot (2893).png"
+import ecom39 from "../assets/projects/ecom/Screenshot (2894).png"
+import ecom40 from "../assets/projects/ecom/Screenshot (2895).png"
+import ecom41 from "../assets/projects/ecom/Screenshot (2896).png"
+import ecom42 from "../assets/projects/ecom/Screenshot (2897).png"
+import ecom43 from "../assets/projects/ecom/Screenshot (2898).png"
+import ecom44 from "../assets/projects/ecom/Screenshot (2899).png"
+import ecom45 from "../assets/projects/ecom/Screenshot (2900).png"
 
 import elms1 from "../assets/projects/elms/Screenshot (2808).png"
 import elms2 from "../assets/projects/elms/Screenshot (2809).png"
@@ -112,7 +134,7 @@ import React, { useState, useEffect, useRef } from "react";
 import ImageModal from "../utils/Modals";
 
 const projectImages = {
-  ecom: [ecom1, ecom2, ecom3, ecom4, ecom5, ecom6, ecom7, ecom8, ecom9, ecom10, ecom11, ecom12, ecom13, ecom14, ecom15, ecom16, ecom17, ecom18, ecom19, ecom20, ecom21, ecom22, ecom23],
+  ecom: [ecom1, ecom2, ecom3, ecom4, ecom5, ecom6, ecom7, ecom8, ecom9, ecom10, ecom11, ecom12, ecom13, ecom14, ecom15, ecom16, ecom17, ecom18, ecom19, ecom20, ecom21, ecom22, ecom23, ecom24, ecom25, ecom26, ecom27, ecom28, ecom29, ecom30, ecom31, ecom32, ecom33, ecom34, ecom35, ecom36, ecom37, ecom38, ecom39, ecom40, ecom41, ecom42, ecom43, ecom44, ecom45],
   elms: [elms1, elms2, elms3, elms4, elms5, elms6, elms7, elms8, elms9, elms10, elms11, elms12, elms13],
   mss: [mss1, mss2, mss3, mss4, mss5, mss6, mss7, mss8, mss9, mss10, mss11, mss12, mss13, mss14, mss15],
   oags: [oags1, oags2, oags3, oags4, oags5, oags6, oags7, oags8, oags9, oags10, oags11, oags12, oags13, oags14, oags15, oags16, oags17, oags18, oags19, oags20, oags21, oags22, oags23, oags24, oags25, oags26, oags27, oags28],
