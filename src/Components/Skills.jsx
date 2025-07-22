@@ -174,7 +174,7 @@ const ScrollingSkills = ({ skills, darkMode }) => {
     const updateWidths = () => {
       const containerWidth = container.offsetWidth;
       const skillElements = container.querySelectorAll('div > div');
-      
+
       let totalItemsWidth = 0;
       skillElements.forEach(el => {
         const style = window.getComputedStyle(el);
@@ -316,8 +316,8 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ 
-        duration: 0.6, 
+      transition={{
+        duration: 0.6,
         delay,
         type: "spring",
         damping: 10,
@@ -325,8 +325,8 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
       }}
       whileHover={{
         y: -5,
-        boxShadow: darkMode 
-          ? "0 10px 25px -5px rgba(0, 0, 0, 0.5)" 
+        boxShadow: darkMode
+          ? "0 10px 25px -5px rgba(0, 0, 0, 0.5)"
           : "0 10px 25px -5px rgba(0, 0, 0, 0.1)"
       }}
       className={`p-3 sm:p-4 rounded-xl shadow-lg flex flex-col ${darkMode ? colors.dark : colors.light
@@ -342,18 +342,18 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
           ${darkMode ? 'bg-gray-700' : 'bg-gray-800'}`}></div>
       </div>
 
-      <motion.div 
+      <motion.div
         className="flex items-center mb-2 sm:mb-3"
         initial={{ x: -10 }}
         animate={{ x: 0 }}
         transition={{ delay: delay + 0.1 }}
       >
-        <motion.div 
+        <motion.div
           className={`p-2 rounded-lg mr-2 sm:mr-3 ${darkMode ? colors.iconDark : colors.iconLight
             } text-white`}
           initial={{ rotate: -15, scale: 0.8 }}
           animate={{ rotate: 0, scale: 1 }}
-          transition={{ 
+          transition={{
             delay: delay + 0.2,
             type: "spring",
             stiffness: 300
@@ -361,7 +361,7 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
         >
           {icon}
         </motion.div>
-        <motion.h3 
+        <motion.h3
           className={`text-sm sm:text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-800'} truncate`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -370,13 +370,13 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
           {title}
         </motion.h3>
       </motion.div>
-      
+
       <motion.p
         className={`text-xl sm:text-2xl font-bold mb-1 ${darkMode ? 'text-white' : 'text-gray-900'}`}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ 
-          duration: 0.5, 
+        transition={{
+          duration: 0.5,
           delay: delay + 0.4,
           type: "spring",
           stiffness: 200
@@ -384,7 +384,7 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
       >
         {value}
       </motion.p>
-      
+
       <motion.p
         className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} truncate`}
         initial={{ opacity: 0 }}
@@ -453,35 +453,35 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
   const colors = platformColors[platform] || platformColors.CodeChef;
   const mode = darkMode ? 'dark' : 'light';
 
-   return (
+  return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ 
-        duration: 0.7, 
+      transition={{
+        duration: 0.7,
         delay,
         type: "spring",
         stiffness: 90
       }}
       whileHover={{
         y: -5,
-        boxShadow: darkMode 
-          ? "0 15px 30px -5px rgba(0, 0, 0, 0.5)" 
+        boxShadow: darkMode
+          ? "0 15px 30px -5px rgba(0, 0, 0, 0.5)"
           : "0 15px 30px -5px rgba(0, 0, 0, 0.1)"
       }}
       className={`p-6 rounded-2xl shadow-lg flex flex-col ${colors[mode].bg} backdrop-blur-md border ${colors[mode].border}`}
     >
-      <motion.div 
+      <motion.div
         className="flex items-center mb-4"
         initial={{ x: -20 }}
         animate={{ x: 0 }}
         transition={{ delay: delay + 0.1 }}
       >
-        <motion.div 
+        <motion.div
           className={`p-3 rounded-lg mr-4 ${colors[mode].iconBg} text-white`}
           initial={{ rotate: -20, scale: 0.8 }}
           animate={{ rotate: 0, scale: 1 }}
-          transition={{ 
+          transition={{
             delay: delay + 0.2,
             type: "spring",
             stiffness: 300
@@ -489,7 +489,7 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
         >
           {icon}
         </motion.div>
-        <motion.h3 
+        <motion.h3
           className={`text-xl font-bold ${colors[mode].text}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -498,7 +498,7 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           {platform}
         </motion.h3>
       </motion.div>
-      
+
       <div className="grid grid-cols-2 gap-4 mb-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -506,12 +506,12 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           transition={{ delay: delay + 0.4 }}
         >
           <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Rating</p>
-          <motion.p 
+          <motion.p
             className={`text-2xl font-bold ${colors[mode].text}`}
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: delay + 0.5,
               type: "spring",
               stiffness: 200
@@ -526,22 +526,22 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           transition={{ delay: delay + 0.6 }}
         >
           <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Stars</p>
-          <motion.div 
+          <motion.div
             className="flex items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: delay + 0.7,
               type: "spring"
             }}
           >
             <motion.span
-              animate={{ 
+              animate={{
                 rotate: [0, 15, -15, 0],
                 scale: [1, 1.2, 1.2, 1]
               }}
-              transition={{ 
+              transition={{
                 delay: delay + 0.8,
                 duration: 0.6,
                 times: [0, 0.3, 0.6, 1]
@@ -555,7 +555,7 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           </motion.div>
         </motion.div>
       </div>
-      
+
       <div className="grid grid-cols-2 gap-4 mb-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -563,12 +563,12 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           transition={{ delay: delay + 0.9 }}
         >
           <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Problems Solved</p>
-          <motion.p 
+          <motion.p
             className={`text-xl font-bold ${colors[mode].text}`}
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: delay + 1.0,
               type: "spring",
               stiffness: 200
@@ -583,12 +583,12 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           transition={{ delay: delay + 1.1 }}
         >
           <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Global Rank</p>
-          <motion.div 
+          <motion.div
             className="flex items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ 
-              duration: 0.5, 
+            transition={{
+              duration: 0.5,
               delay: delay + 1.2,
               type: "spring"
             }}
@@ -602,13 +602,13 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
       </div>
 
       {/* Total Problems Solved Section */}
-      <motion.div 
+      <motion.div
         className={`mt-4 pt-4 border-t ${colors[mode].border}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: delay + 1.3 }}
       >
-        <motion.p 
+        <motion.p
           className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} mb-2`}
           initial={{ x: -10 }}
           animate={{ x: 0 }}
@@ -620,8 +620,8 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           className={`p-3 rounded-lg ${colors[mode].accent} flex items-center justify-center`}
           initial={{ scale: 0.95, y: 10 }}
           animate={{ scale: 1, y: 0 }}
-          transition={{ 
-            duration: 0.5, 
+          transition={{
+            duration: 0.5,
             delay: delay + 1.5,
             type: "spring",
             stiffness: 150
@@ -629,10 +629,10 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
           whileHover={{ scale: 1.05 }}
         >
           <motion.span
-            animate={{ 
+            animate={{
               rotate: [0, 10, -10, 0],
             }}
-            transition={{ 
+            transition={{
               delay: delay + 1.6,
               duration: 0.6
             }}
@@ -643,7 +643,7 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
             {totalProblems}+
           </span>
         </motion.div>
-        <motion.p 
+        <motion.p
           className={`text-xs mt-2 text-center ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -684,21 +684,21 @@ export default function Skills() {
   const rank = import.meta.env.VITE_CODECHEF_RANK;
   const totalProblems = import.meta.env.VITE_CODECHEF_TOTAL_PROBLEMS;
 
-  useEffect(()=>{
+  useEffect(() => {
     setGitHubStats({
-    totalRepos: totalRepos,
-    publicRepos: publicRepos,
-    Contributions: contributions,
-    issuesResolved: issuesResolved,
-  })
+      totalRepos: totalRepos,
+      publicRepos: publicRepos,
+      Contributions: contributions,
+      issuesResolved: issuesResolved,
+    })
 
-  setCodeChefStats({
-    rating: rating,
-    stars: stars,
-    problemsSolved: problemsSolved,
-    rank: rank,
-    totalProblems: totalProblems
-  })
+    setCodeChefStats({
+      rating: rating,
+      stars: stars,
+      problemsSolved: problemsSolved,
+      rank: rank,
+      totalProblems: totalProblems
+    })
   }, [totalRepos, publicRepos, contributions, issuesResolved, rating, stars, problemsSolved, rank, totalProblems])
 
   return (
@@ -730,7 +730,7 @@ export default function Skills() {
       </motion.div>
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-16">
-        
+
 
         {/* Skills Categories with Scrolling Skills */}
         {skillCategories.map((category, index) => (
@@ -775,8 +775,8 @@ export default function Skills() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
             className={`p-6 rounded-2xl shadow-xl ${darkMode
-                ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30'
-                : 'bg-white/80 backdrop-blur-md border border-gray-200/30'
+              ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30'
+              : 'bg-white/80 backdrop-blur-md border border-gray-200/30'
               }`}
           >
             <h2 className={`text-2xl font-bold mb-6 flex items-center ${darkMode ? 'text-white' : 'text-gray-900'
