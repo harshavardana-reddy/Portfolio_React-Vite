@@ -414,7 +414,7 @@ export default function Projects() {
 
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'}`}>
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-[#020617] text-gray-100' : 'bg-slate-50 text-slate-900'}`}>
       {/* Enhanced Header Animation */}
       <motion.div
         initial={{ opacity: 0, y: -40 }}
@@ -482,8 +482,12 @@ export default function Projects() {
               key={projectIndex}
               variants={cardItem}
               whileHover="hover"
-              whileTap={{ scale: 0.98 }}
-              className={`rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 ${darkMode ? 'bg-gray-800/50 backdrop-blur-md border border-gray-700/30 hover:shadow-yellow-500/10' : 'bg-white/80 backdrop-blur-md border border-gray-200/30 hover:shadow-yellow-500/20'}`}
+              whileTap={{ scale: 0.99, rotateX: 4, rotateY: -4 }}
+              className={`rounded-3xl overflow-hidden shadow-[0_0_35px_rgba(56,189,248,0.35)] transition-all duration-300 ${
+                darkMode
+                  ? 'bg-slate-900/70 backdrop-blur-2xl border border-cyan-500/30 hover:border-cyan-300'
+                  : 'bg-gray-50/80 backdrop-blur-2xl border border-cyan-400/40 hover:border-cyan-200'
+              }`}
             >
               {/* Enhanced Project Header Animation */}
               <motion.div

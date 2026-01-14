@@ -66,16 +66,16 @@ const CERTIFICATIONS = [
 ];
 
 const SKILLS = [
-  { name: "Java", icon: <FaJava className="text-red-500" />, level: 90 },
-  { name: "Spring Boot", icon: <SiSpring className="text-green-500" />, level: 85 },
-  { name: "React.js", icon: <FaReact className="text-blue-400" />, level: 80 },
-  { name: "Python", icon: <FaPython className="text-blue-600" />, level: 75 },
-  { name: "Node.js", icon: <FaNodeJs className="text-green-500" />, level: 75 },
-  { name: "MongoDB", icon: <SiMongodb className="text-green-600" />, level: 70 },
-  { name: "Django", icon: <SiDjango className="text-green-700" />, level: 65 },
-  { name: "Jenkins", icon: <SiJenkins className="text-red-400" />, level: 70 },
-  { name: "Docker", icon: <SiDocker className="text-blue-500" />, level: 75 },
-  { name: "AWS", icon: <FaAws className="text-orange-500" />, level: 80 }
+  { name: "Java", icon: <FaJava className="text-red-500" /> },
+  { name: "Spring Boot", icon: <SiSpring className="text-green-500" /> },
+  { name: "React.js", icon: <FaReact className="text-blue-400" /> },
+  { name: "Python", icon: <FaPython className="text-blue-600" /> },
+  { name: "Node.js", icon: <FaNodeJs className="text-green-500" /> },
+  { name: "MongoDB", icon: <SiMongodb className="text-green-600" /> },
+  { name: "Django", icon: <SiDjango className="text-green-700" /> },
+  { name: "Jenkins", icon: <SiJenkins className="text-red-400" /> },
+  { name: "Docker", icon: <SiDocker className="text-blue-500" /> },
+  { name: "AWS", icon: <FaAws className="text-orange-500" /> }
 ];
 
 const SOCIAL_LINKS = [
@@ -100,14 +100,9 @@ const SOCIAL_LINKS = [
     href: "https://www.codechef.com/users/klu2200030963"
   },
   {
-    name: "StopStalk",
-    icon: <span className="text-lg">📊</span>,
-    href: "https://www.stopstalk.com/user/profile/klu_2200030963"
-  },
-  {
     name: "HackerRank",
     icon: <span className="text-lg">💻</span>,
-    href: "https://www.hackerrank.com/profile/klu_2200030963"
+    href: "https://www.hackerrank.com/profile/harsha_219465"
   }
 ];
 
@@ -269,34 +264,16 @@ const SkillsSection = ({ darkMode }) => (
         <motion.div
           key={index}
           variants={itemVariants}
-          className="flex flex-col items-center"
+          className={`flex flex-col items-center p-4 rounded-xl shadow-md transition-all duration-300 ${
+            darkMode ? 'bg-gray-800/70 hover:bg-gray-700' : 'bg-white/90 hover:bg-gray-50'
+          }`}
         >
-          <div className="relative w-20 h-20 mb-4 flex items-center justify-center">
-            <svg className="w-full h-full" viewBox="0 0 36 36">
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke={darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}
-                strokeWidth="3"
-              />
-              <path
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke={darkMode ? '#f6e05e' : '#d97706'}
-                strokeWidth="3"
-                strokeDasharray={`${skill.level}, 100`}
-              />
-            </svg>
-            <div className="absolute text-3xl">
+          <div className="w-16 h-16 mb-3 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-400/10 to-yellow-500/30">
+            <span className="text-3xl">
               {skill.icon}
-            </div>
+            </span>
           </div>
           <span className={`text-center font-medium ${darkMode ? 'text-white' : 'text-gray-800'}`}>{skill.name}</span>
-          <span className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{skill.level}%</span>
         </motion.div>
       ))}
     </div>
@@ -335,7 +312,11 @@ export default function About() {
   const { darkMode } = useTheme();
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-900'}`}>
+    <div
+      className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+        darkMode ? 'bg-[#020617] text-gray-100' : 'bg-slate-50 text-slate-900'
+      }`}
+    >
       <FloatingParticles darkMode={darkMode} />
 
       <div className="max-w-7xl mx-auto relative z-10">

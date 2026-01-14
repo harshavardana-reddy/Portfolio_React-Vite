@@ -24,7 +24,7 @@ const Certifications = [
         date: "12-06-2024",
         issuer: "Oracle",
         description: "This certification demonstrates my proficiency in Java programming, focusing on Java SE11, with a deep understanding of object-oriented principles, API usage, and effective coding techniques for scalable applications.",
-        verifyLink: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=117245ABB2073AC4ABB5DA5A24407846249B481460B10E62EF3D12D2E124A950",
+        verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=9A63B3E91DFE9E03C80F9C67D11A32071D259C3C7FCE7CD1518F7435D8666F8D",
         badge: badge2
     },
     {

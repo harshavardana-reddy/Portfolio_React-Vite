@@ -125,39 +125,31 @@ export default function Home() {
     document.body.removeChild(link);
   };
 
-  // Theme-based styles
+  // Theme-based styles for cyberpunk minimal neon 3D look
   const themeClasses = {
     background: darkMode 
-      ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' 
-      : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900',
-    nameGradient: darkMode 
-      ? 'bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-300' 
-      : 'bg-gradient-to-r from-yellow-500 via-amber-600 to-yellow-500',
-    titleGradient: darkMode 
-      ? 'bg-gradient-to-r from-cyan-300 via-pink-300 to-purple-300' 
-      : 'bg-gradient-to-r from-cyan-500 via-pink-500 to-purple-500',
-    cursor: darkMode ? 'bg-white' : 'bg-gray-900',
+      ? 'bg-[#020617] text-gray-100' 
+      : 'bg-slate-50 text-slate-900',
+    nameGradient: 'bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400',
+    titleGradient: 'bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-purple-400',
+    cursor: darkMode ? 'bg-white' : 'bg-slate-900',
     blob1: darkMode 
       ? 'bg-gradient-to-r from-purple-500 to-indigo-600' 
-      : 'bg-gradient-to-r from-purple-200 to-indigo-300',
+      : 'bg-gradient-to-r from-purple-400 to-indigo-500',
     blob2: darkMode 
       ? 'bg-gradient-to-r from-pink-500 to-rose-600' 
-      : 'bg-gradient-to-r from-pink-200 to-rose-300',
+      : 'bg-gradient-to-r from-pink-400 to-rose-500',
     blob3: darkMode 
       ? 'bg-gradient-to-r from-blue-500 to-cyan-600' 
-      : 'bg-gradient-to-r from-blue-200 to-cyan-300',
+      : 'bg-gradient-to-r from-sky-400 to-cyan-500',
     primaryButton: darkMode 
       ? 'bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-cyan-500/30' 
       : 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-cyan-500/50',
     secondaryButton: darkMode 
       ? 'bg-white/10 backdrop-blur-lg text-white hover:bg-white/20 hover:shadow-white/30' 
       : 'bg-white/80 backdrop-blur-lg text-gray-900 hover:bg-white hover:shadow-gray-500/30',
-    profileBorder: darkMode 
-      ? 'border-white/50 hover:border-white' 
-      : 'border-gray-300/50 hover:border-gray-400',
-    profileGlow: darkMode 
-      ? 'to-purple-500/20' 
-      : 'to-purple-400/20',
+    profileBorder: 'border-cyan-400/60 hover:border-cyan-300',
+    profileGlow: 'to-cyan-500/25',
     profileOverlay: darkMode 
       ? 'bg-white/5 group-hover:bg-transparent' 
       : 'bg-gray-100/5 group-hover:bg-transparent',
@@ -171,7 +163,6 @@ export default function Home() {
 
   return (
     <div className={`min-h-screen overflow-hidden relative ${themeClasses.background}`}>
-      <ParticleBackground darkMode={darkMode} />
       <AnimatedGradientCircles darkMode={darkMode} themeClasses={themeClasses} />
       
       <div className="relative z-10 container mx-auto px-6 py-12 md:py-24 flex flex-col md:flex-row items-center justify-between min-h-screen">
@@ -199,43 +190,15 @@ export default function Home() {
   );
 }
 
-const ParticleBackground = ({ darkMode }) => (
-  <div className="absolute inset-0 overflow-hidden">
-    {[...Array(30)].map((_, i) => (
-      <motion.div
-        key={i}
-        className={`absolute rounded-full ${darkMode ? 'bg-white/10' : 'bg-purple-600/10'}`}
-        style={{
-          width: Math.random() * 10 + 5,
-          height: Math.random() * 10 + 5,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-        }}
-        animate={{
-          y: [0, Math.random() * 100 - 50],
-          x: [0, Math.random() * 100 - 50],
-          opacity: [0.1, 0.3, 0.1],
-        }}
-        transition={{
-          duration: Math.random() * 20 + 10,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear",
-        }}
-      />
-    ))}
-  </div>
-);
-
 const AnimatedGradientCircles = ({ darkMode, themeClasses }) => (
   <motion.div
-    className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none"
-    animate={{ scale: [1, 1.1, 1] }}
-    transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+    className="absolute top-0 left-0 w-full h-full opacity-60 pointer-events-none"
+    animate={{ scale: [1, 1.04, 1] }}
+    transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
   >
-    <div className={`absolute top-20 left-10 w-40 h-40 rounded-full mix-blend-overlay filter blur-xl opacity-70 animate-blob ${themeClasses.blob1}`}></div>
-    <div className={`absolute top-1/4 right-20 w-48 h-48 rounded-full mix-blend-overlay filter blur-xl opacity-70 animate-blob animation-delay-2000 ${themeClasses.blob2}`}></div>
-    <div className={`absolute bottom-20 left-1/3 w-52 h-52 rounded-full mix-blend-overlay filter blur-xl opacity-70 animate-blob animation-delay-4000 ${themeClasses.blob3}`}></div>
+    <div className={`absolute -top-24 -left-10 w-64 h-64 rounded-full mix-blend-screen blur-3xl opacity-70 animate-blob ${themeClasses.blob1}`}></div>
+    <div className={`absolute top-1/3 -right-16 w-72 h-72 rounded-full mix-blend-screen blur-3xl opacity-70 animate-blob animation-delay-2000 ${themeClasses.blob2}`}></div>
+    <div className={`absolute bottom-0 left-1/4 w-80 h-80 rounded-full mix-blend-screen blur-3xl opacity-70 animate-blob animation-delay-4000 ${themeClasses.blob3}`}></div>
   </motion.div>
 );
 
@@ -267,8 +230,8 @@ const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload, isD
     <div className="flex flex-wrap gap-4 mb-8">
       <motion.button
         onClick={handleDownload}
-        whileHover={{ scale: isDownloading ? 1 : 1.05 }}
-        whileTap={{ scale: isDownloading ? 1 : 0.95 }}
+        whileHover={isDownloading ? {} : { scale: 1.03, rotateX: 6, rotateY: -6 }}
+        whileTap={isDownloading ? {} : { scale: 0.97, rotateX: 0, rotateY: 0 }}
         className={`flex items-center justify-center gap-2 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 ${themeClasses.primaryButton}`}
         disabled={isDownloading}
       >
@@ -299,8 +262,8 @@ const ContentSection = ({ darkMode, typedText, themeClasses, handleDownload, isD
       
       <motion.a
         href="/contact"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.03, rotateX: 6, rotateY: 6 }}
+        whileTap={{ scale: 0.97, rotateX: 0, rotateY: 0 }}
         className={`flex items-center gap-2 font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 ${themeClasses.secondaryButton}`}
       >
         Contact Me <FaExternalLinkAlt className="text-xs" />
@@ -338,12 +301,12 @@ const SocialIcons = () => (
 const ProfileSection = ({ darkMode, themeClasses, hoveredSkill, setHoveredSkill }) => (
   <motion.div
     className="md:w-1/2 flex justify-center relative"
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
+    initial={{ opacity: 0, scale: 0.85, rotateX: -8 }}
+    animate={{ opacity: 1, scale: 1, rotateX: 0 }}
     transition={{ duration: 0.5, delay: 0.2 }}
   >
     <div className="relative">
-      <div className={`relative w-64 h-64 md:w-80 md:h-80 rounded-full border-4 overflow-hidden shadow-2xl group transition-all duration-500 ${themeClasses.profileBorder}`}>
+      <div className={`relative w-64 h-64 md:w-80 md:h-80 rounded-[2.5rem] border-2 overflow-hidden shadow-[0_0_40px_rgba(56,189,248,0.5)] group transition-all duration-500 ${themeClasses.profileBorder}`}>
         <img 
           src={profile}
           alt="Pathiputtoor Harshavardana Reddy"

@@ -100,56 +100,53 @@ export default function MainNavBar() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 
-      'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100' : 
-      'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'}`}
+    <div
+      className={`min-h-screen transition-colors duration-500 ${
+        darkMode
+          ? 'bg-[#020617] text-gray-100'         // dark cyberpunk
+          : 'bg-slate-50 text-slate-900'        // light cyberpunk
+      }`}
     >
-      {/* Floating particles background */}
-      <div className="fixed inset-0 overflow-hidden opacity-20 dark:opacity-10">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={i}
-            className={`absolute rounded-full ${darkMode ? 'bg-white' : 'bg-purple-600'}`}
-            style={{
-              width: `${Math.random() * 10 + 5}px`,
-              height: `${Math.random() * 10 + 5}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animation: `float ${Math.random() * 20 + 10}s linear infinite`,
-              animationDelay: `${Math.random() * 5}s`
-            }}
-          />
-        ))}
+      {/* Cyberpunk neon radial glow background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          {darkMode ? (
+            <>
+              <div className="absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,#22d3ee_0,#22d3ee10_40%,transparent_70%)] blur-3xl" />
+              <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[radial-gradient(circle_at_center,#a855f7_0,#a855f710_40%,transparent_70%)] blur-3xl" />
+            </>
+          ) : (
+            <>
+              <div className="absolute -top-24 left-10 h-64 w-64 rounded-full bg-[radial-gradient(circle_at_center,#22c55e_0,#22c55e10_40%,transparent_70%)] blur-3xl opacity-70" />
+              <div className="absolute bottom-0 right-4 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,#06b6d4_0,#06b6d410_40%,transparent_70%)] blur-3xl opacity-70" />
+            </>
+          )}
+        </div>
       </div>
 
       {/* Glassmorphic Navbar */}
-      <nav className={`fixed w-full z-40 transition-all duration-500 ${
-        scrolled 
-          ? 'py-2 backdrop-blur-xl shadow-xl' 
-          : 'py-4 backdrop-blur-lg shadow-lg'
+      <nav
+        className={`fixed w-full z-40 transition-all duration-500 ${
+          scrolled 
+            ? 'py-2 backdrop-blur-xl shadow-[0_0_40px_rgba(56,189,248,0.25)]' 
+            : 'py-4 backdrop-blur-lg shadow-[0_0_30px_rgba(168,85,247,0.2)]'
         } ${
           darkMode 
-            ? 'bg-gray-900/70 border-b border-gray-700/50' 
-            : 'bg-white/70 border-b border-gray-200/50'
+            ? 'bg-slate-950/80 border-b border-cyan-500/30' 
+            : 'bg-white/80 border-b border-cyan-400/40'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
             {/* Logo/Brand */}
             <div className="flex-shrink-0 flex items-center">
-              <div className={`h-8 w-8 rounded-full flex items-center justify-center shadow-lg ${
-                darkMode 
-                  ? 'bg-gradient-to-r from-purple-500 to-blue-500' 
-                  : 'bg-gradient-to-r from-purple-600 to-blue-600'
-                }`}
+              <div
+                className={`h-8 w-8 rounded-2xl flex items-center justify-center shadow-[0_0_18px_rgba(34,211,238,0.8)] border border-cyan-400/60 bg-slate-900`}
               >
                 <span className="text-white font-bold text-xs">DP</span>
               </div>
-              <span className={`ml-2 font-semibold text-lg bg-clip-text ${
-                darkMode 
-                  ? 'text-transparent bg-gradient-to-r from-purple-400 to-blue-400' 
-                  : 'text-transparent bg-gradient-to-r from-purple-600 to-blue-600'
-                }`}
+              <span
+                className={`ml-2 font-semibold text-lg bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400`}
               >
                 DevPortfolio
               </span>

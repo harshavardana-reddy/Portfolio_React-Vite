@@ -322,7 +322,9 @@ const Contact = () => {
   );
 
   return (
-    <div className="p-4 sm:p-6 md:p-8">
+    <div className={`p-4 sm:p-6 md:p-8 ${
+      darkMode ? 'bg-[#020617] text-gray-100' : 'bg-slate-50 text-slate-900'
+    }`}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

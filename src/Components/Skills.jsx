@@ -37,84 +37,109 @@ const SkillsData = {
   softSkills: ["Teamwork", "Communication", "Problem Solving", "Adaptability", "Time Management", "Leadership", "Collaboration", "Critical Thinking"],
 };
 
-const skillIcons = {
-  // Languages
-  "C/C++": <FaCode className="text-blue-500" />,
-  "Java": <FaJava className="text-red-500" />,
-  "Python": <FaPython className="text-blue-400" />,
-  "JavaScript": <DiJavascript className="text-yellow-400" />,
+// Helper function to get icon colors based on theme
+const getIconColor = (darkMode, baseColor) => {
+  if (darkMode === undefined) return baseColor;
+  return darkMode ? 
+    baseColor.replace(/text-([a-z]+)-(\d+)/, (match, color, shade) => {
+      // For dark mode, use lighter shades (300-400 range)
+      const newShade = Math.min(parseInt(shade) + 200, 400);
+      return `text-${color}-${newShade}`;
+    }) : 
+    baseColor;
+};
 
-  // Tech Stacks
-  "Spring Boot with React.js": (
-    <div className="flex items-center">
-      <SiSpring className="text-green-500 text-2xl" />
-      <span className="mx-1 text-sm">+</span>
-      <FaReact className="text-cyan-500 text-2xl" />
-    </div>
-  ),
-  "MERN (MongoDB, Express, React.js, Node.js) Stack": (
-    <div className="flex items-center">
-      <SiMongodb className="text-green-500 text-xl" />
-      <SiExpress className=" text-xl mx-1" />
-      <FaReact className="text-cyan-500 text-xl" />
-      <FaNodeJs className="text-green-600 text-xl ml-1" />
-    </div>
-  ),
-  "Python Full Stack with Django": (
-    <div className="flex items-center">
-      <FaPython className="text-blue-400 text-2xl" />
-      <span className="mx-1 text-sm">+</span>
-      <SiDjango className="text-green-700 text-2xl" />
-    </div>
-  ),
+// Create a wrapper component for icons that need theme awareness
+const ThemedIcon = ({ children, darkMode }) => {
+  if (!children || typeof children !== 'object') return children;
+  
+  // Clone the element and add theme-aware classes
+  return children;
+};
 
-  // Frontend
-  "HTML": <span className="text-orange-500">HTML</span>,
-  "CSS": <span className="text-blue-400">CSS</span>,
-  "React.js": <FaReact className="text-cyan-500" />,
-  "Next.js": <SiNextdotjs className="text-gray-800 dark:text-white" />,
-  "Bootstrap": <SiBootstrap className="text-purple-500" />,
-  "Tailwind CSS": <SiTailwindcss className="text-cyan-400" />,
+// Updated skillIcons to use theme context
+const SkillIconsComponent = ({ skill, darkMode }) => {
+  const iconMap = {
+    // Languages
+    "C/C++": <FaCode className={darkMode ? "text-blue-400" : "text-blue-600"} />,
+    "Java": <FaJava className={darkMode ? "text-red-400" : "text-red-600"} />,
+    "Python": <FaPython className={darkMode ? "text-blue-300" : "text-blue-500"} />,
+    "JavaScript": <DiJavascript className={darkMode ? "text-yellow-300" : "text-yellow-500"} />,
 
-  // Backend
-  "Spring Boot": <SiSpring className="text-green-500" />,
-  "Express.js": <SiExpress className="" />,
-  "Node.js": <FaNodeJs className="text-green-600" />,
-  "Django": <SiDjango className="text-green-700" />,
-  "Microservices": <FaServer className="text-purple-400" />,
+    // Tech Stacks
+    "Spring Boot with React.js": (
+      <div className="flex items-center">
+        <SiSpring className={darkMode ? "text-green-400" : "text-green-600"} />
+        <span className="mx-1 text-sm">+</span>
+        <FaReact className={darkMode ? "text-cyan-400" : "text-cyan-600"} />
+      </div>
+    ),
+    "MERN (MongoDB, Express, React.js, Node.js) Stack": (
+      <div className="flex items-center">
+        <SiMongodb className={darkMode ? "text-green-400" : "text-green-600"} />
+        <SiExpress className={darkMode ? "text-gray-300" : "text-gray-800"} />
+        <FaReact className={darkMode ? "text-cyan-400" : "text-cyan-600"} />
+        <FaNodeJs className={darkMode ? "text-green-400" : "text-green-600"} />
+      </div>
+    ),
+    "Python Full Stack with Django": (
+      <div className="flex items-center">
+        <FaPython className={darkMode ? "text-blue-300" : "text-blue-500"} />
+        <span className="mx-1 text-sm">+</span>
+        <SiDjango className={darkMode ? "text-green-400" : "text-green-700"} />
+      </div>
+    ),
 
-  // Databases
-  "MySQL": <SiMysql className="text-blue-600" />,
-  "MongoDB": <SiMongodb className="text-green-500" />,
-  "PostgreSQL": <SiPostgresql className="text-blue-700" />,
+    // Frontend
+    "HTML": <span className={darkMode ? "text-orange-400" : "text-orange-600"}>HTML</span>,
+    "CSS": <span className={darkMode ? "text-blue-400" : "text-blue-600"}>CSS</span>,
+    "React.js": <FaReact className={darkMode ? "text-cyan-400" : "text-cyan-600"} />,
+    "Next.js": <SiNextdotjs className={darkMode ? "text-gray-300" : "text-gray-800"} />,
+    "Bootstrap": <SiBootstrap className={darkMode ? "text-purple-400" : "text-purple-600"} />,
+    "Tailwind CSS": <SiTailwindcss className={darkMode ? "text-cyan-300" : "text-cyan-500"} />,
 
-  // Cloud & DevOps
-  "AWS": <FaAws className="text-orange-500" />,
-  "Azure": <VscAzureDevops className="text-blue-500" />,
-  "GCP": <SiGooglecloud className="text-red-500" />,
-  "Jenkins": <SiJenkins className="text-red-400" />,
-  "GitHub Actions": <SiGithub className="text-gray-800 dark:text-white" />,
+    // Backend
+    "Spring Boot": <SiSpring className={darkMode ? "text-green-400" : "text-green-600"} />,
+    "Express.js": <SiExpress className={darkMode ? "text-gray-300" : "text-gray-800"} />,
+    "Node.js": <FaNodeJs className={darkMode ? "text-green-400" : "text-green-600"} />,
+    "Django": <SiDjango className={darkMode ? "text-green-400" : "text-green-700"} />,
+    "Microservices": <FaServer className={darkMode ? "text-purple-300" : "text-purple-500"} />,
 
-  // Tools
-  "Docker": <SiDocker className="text-blue-400" />,
-  "Postman": <SiPostman className="text-orange-500" />,
-  "Git": <SiGit className="text-orange-600" />,
-  "GitHub": <SiGithub className="text-gray-800 dark:text-white" />,
+    // Databases
+    "MySQL": <SiMysql className={darkMode ? "text-blue-400" : "text-blue-600"} />,
+    "MongoDB": <SiMongodb className={darkMode ? "text-green-400" : "text-green-600"} />,
+    "PostgreSQL": <SiPostgresql className={darkMode ? "text-blue-400" : "text-blue-700"} />,
 
-  // IDEs
-  "VS Code": <DiVisualstudio className="text-blue-500" />,
-  "Eclipse": <SiEclipseide className="text-purple-600" />,
-  "PyCharm": <SiPycharm className="text-green-500" />,
+    // Cloud & DevOps
+    "AWS": <FaAws className={darkMode ? "text-orange-400" : "text-orange-600"} />,
+    "Azure": <VscAzureDevops className={darkMode ? "text-blue-400" : "text-blue-600"} />,
+    "GCP": <SiGooglecloud className={darkMode ? "text-red-400" : "text-red-600"} />,
+    "Jenkins": <SiJenkins className={darkMode ? "text-red-300" : "text-red-500"} />,
+    "GitHub Actions": <SiGithub className={darkMode ? "text-gray-300" : "text-gray-800"} />,
 
-  // Soft Skills
-  "Teamwork": <FaPeopleArrows className="text-blue-400" />,
-  "Communication": <FaComments className="text-green-400" />,
-  "Problem Solving": <FaLightbulb className="text-yellow-400" />,
-  "Adaptability": <GiBrain className="text-purple-400" />,
-  "Time Management": <FaClock className="text-red-400" />,
-  "Leadership": <BsPeopleFill className="text-indigo-400" />,
-  "Collaboration": <FaHandshake className="text-teal-400" />,
-  "Critical Thinking": <GiBrain className="text-orange-400" />,
+    // Tools
+    "Docker": <SiDocker className={darkMode ? "text-blue-300" : "text-blue-500"} />,
+    "Postman": <SiPostman className={darkMode ? "text-orange-400" : "text-orange-600"} />,
+    "Git": <SiGit className={darkMode ? "text-orange-400" : "text-orange-600"} />,
+    "GitHub": <SiGithub className={darkMode ? "text-gray-300" : "text-gray-800"} />,
+
+    // IDEs
+    "VS Code": <DiVisualstudio className={darkMode ? "text-blue-400" : "text-blue-600"} />,
+    "Eclipse": <SiEclipseide className={darkMode ? "text-purple-400" : "text-purple-600"} />,
+    "PyCharm": <SiPycharm className={darkMode ? "text-green-400" : "text-green-600"} />,
+
+    // Soft Skills
+    "Teamwork": <FaPeopleArrows className={darkMode ? "text-blue-300" : "text-blue-500"} />,
+    "Communication": <FaComments className={darkMode ? "text-green-300" : "text-green-500"} />,
+    "Problem Solving": <FaLightbulb className={darkMode ? "text-yellow-300" : "text-yellow-500"} />,
+    "Adaptability": <GiBrain className={darkMode ? "text-purple-300" : "text-purple-500"} />,
+    "Time Management": <FaClock className={darkMode ? "text-red-300" : "text-red-500"} />,
+    "Leadership": <BsPeopleFill className={darkMode ? "text-indigo-300" : "text-indigo-500"} />,
+    "Collaboration": <FaHandshake className={darkMode ? "text-teal-300" : "text-teal-500"} />,
+    "Critical Thinking": <GiBrain className={darkMode ? "text-orange-300" : "text-orange-500"} />,
+  };
+
+  return iconMap[skill] || <FaCode className={darkMode ? "text-gray-400" : "text-gray-600"} />;
 };
 
 const skillCategories = [
@@ -269,7 +294,7 @@ const ScrollingSkills = ({ skills, darkMode }) => {
             whileTap={{ scale: 0.95 }}
           >
             <div className="text-4xl mb-3">
-              {skillIcons[skill] || <FaCode />}
+              <SkillIconsComponent skill={skill} darkMode={darkMode} />
             </div>
             <span className={`text-center font-medium text-sm ${darkMode ? 'text-gray-200' : 'text-gray-700'
               }`}>
@@ -331,7 +356,7 @@ const StatsCard = ({ icon, title, value, description, color, darkMode, delay }) 
       }}
       className={`p-3 sm:p-4 rounded-xl shadow-lg flex flex-col ${darkMode ? colors.dark : colors.light
         } backdrop-blur-md border ${darkMode ? 'border-gray-700/30' : 'border-gray-200/30'
-        } relative group`} // Added 'relative' and 'group' classes
+        } relative group`}
     >
       {/* Tooltip container */}
       <div className={`absolute -top-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 
@@ -547,9 +572,9 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
                 times: [0, 0.3, 0.6, 1]
               }}
             >
-              <FaStar className="text-yellow-400 mr-1" />
+              <FaStar className={darkMode ? "text-yellow-300" : "text-yellow-500"} />
             </motion.span>
-            <span className={`text-2xl font-bold ${colors[mode].text}`}>
+            <span className={`text-2xl font-bold ml-2 ${colors[mode].text}`}>
               {stars}
             </span>
           </motion.div>
@@ -593,7 +618,7 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
               type: "spring"
             }}
           >
-            <GiRank3 className={`${darkMode ? 'text-blue-300' : 'text-blue-500'} mr-1 text-xl`} />
+            <GiRank3 className={`${darkMode ? 'text-blue-400' : 'text-blue-600'} mr-2 text-xl`} />
             <span className={`text-xl font-bold ${colors[mode].text}`}>
               {rank}
             </span>
@@ -637,9 +662,9 @@ const RatingCard = ({ icon, platform, rating, stars, problemsSolved, rank, total
               duration: 0.6
             }}
           >
-            <FaCode className={`${darkMode ? 'text-purple-300' : 'text-purple-500'} mr-2 text-xl`} />
+            <FaCode className={`${darkMode ? 'text-purple-400' : 'text-purple-600'} mr-2 text-xl`} />
           </motion.span>
-          <span className={`text-2xl font-bold ${darkMode ? 'text-purple-200' : 'text-purple-700'}`}>
+          <span className={`text-2xl font-bold ${darkMode ? 'text-purple-300' : 'text-purple-700'}`}>
             {totalProblems}+
           </span>
         </motion.div>
@@ -702,10 +727,9 @@ export default function Skills() {
   }, [totalRepos, publicRepos, contributions, issuesResolved, rating, stars, problemsSolved, rank, totalProblems])
 
   return (
-    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${darkMode
-      ? 'bg-gradient-to-br from-gray-900 via-purple-900 to-violet-800 text-gray-100'
-      : 'bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 text-gray-900'
-      }`}>
+    <div className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+      darkMode ? 'bg-[#020617] text-gray-100' : 'bg-slate-50 text-slate-900'
+    }`}>
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -730,7 +754,6 @@ export default function Skills() {
       </motion.div>
 
       <div className="max-w-7xl mx-auto relative z-10 space-y-16">
-
 
         {/* Skills Categories with Scrolling Skills */}
         {skillCategories.map((category, index) => (
@@ -781,7 +804,7 @@ export default function Skills() {
           >
             <h2 className={`text-2xl font-bold mb-6 flex items-center ${darkMode ? 'text-white' : 'text-gray-900'
               }`}>
-              <SiGithub className="mr-3 text-gray-800 dark:text-white" /> GitHub Stats
+              <SiGithub className={`mr-3 ${darkMode ? 'text-gray-300' : 'text-gray-800'}`} /> GitHub Stats
             </h2>
 
             <div className="grid grid-cols-2 gap-4">
@@ -873,7 +896,7 @@ export default function Skills() {
             <div className="space-y-4 sm:space-y-6">
               <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'
                 } mb-3 sm:mb-4 flex items-center`}>
-                <FaCode className="mr-2 text-blue-500 text-lg sm:text-xl" /> Development Tools
+                <FaCode className={`mr-2 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`} /> Development Tools
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
                 {["VS Code", "Eclipse", "PyCharm", "Git", "GitHub", "Postman"].map((tool, index) => (
@@ -892,7 +915,7 @@ export default function Skills() {
                   >
                     <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'
                       }`}>
-                      {skillIcons[tool]}
+                      <SkillIconsComponent skill={tool} darkMode={darkMode} />
                     </div>
                     <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'
                       } truncate`}>
@@ -907,7 +930,7 @@ export default function Skills() {
             <div className="space-y-4 sm:space-y-6">
               <h3 className={`text-lg sm:text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-800'
                 } mb-3 sm:mb-4 flex items-center`}>
-                <FaCloud className="mr-2 text-orange-500 text-lg sm:text-xl" /> Cloud & Deployment
+                <FaCloud className={`mr-2 ${darkMode ? 'text-orange-400' : 'text-orange-600'}`} /> Cloud & Deployment
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
                 {["AWS", "Azure", "GCP", "Docker", "Jenkins", "GitHub Actions"].map((tech, index) => (
@@ -926,7 +949,7 @@ export default function Skills() {
                   >
                     <div className={`p-2 sm:p-3 rounded-lg mr-3 ${darkMode ? 'bg-gray-600/50' : 'bg-white'
                       }`}>
-                      {skillIcons[tech]}
+                      <SkillIconsComponent skill={tech} darkMode={darkMode} />
                     </div>
                     <span className={`text-sm sm:text-base font-medium ${darkMode ? 'text-white' : 'text-gray-800'
                       } truncate`}>
