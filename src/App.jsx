@@ -1,6 +1,7 @@
 import { BrowserRouter } from "react-router-dom"
 import MainNavBar from  "./Components/MainNavBar"
 import { ThemeProvider } from './Components/ThemeContext';
+import CustomCursor from "./Components/CustomCursor";
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
     <div>
       <ThemeProvider>
         <BrowserRouter>
+          <CustomCursor/>
           <MainNavBar/>
         </BrowserRouter>
       </ThemeProvider>
