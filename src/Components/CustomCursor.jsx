@@ -1,79 +1,52 @@
 import { useEffect, useRef } from "react";
+import { useCursor } from "./CursorContext";
 import cursor from "../assets/cursor/images/pointer.png";
 
 export default function CustomCursor() {
+  const { cursorEnabled } = useCursor();
   const cursorRef = useRef(null);
 
   const mouse = useRef({ x: 0, y: 0 });
   const pos = useRef({ x: 0, y: 0 });
-  const visible = useRef(false);
 
   const smoothness = 0.12;
 
   useEffect(() => {
-    // ❌ Disable on touch devices
-    if ("ontouchstart" in window) return;
+    if (!cursorEnabled) return;
 
     const moveMouse = (e) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-
-      if (!visible.current && cursorRef.current) {
-        visible.current = true;
-        cursorRef.current.style.opacity = "1";
-      }
+      cursorRef.current.style.opacity = "1";
     };
 
-    const hideCursor = () => {
-      if (cursorRef.current) {
-        cursorRef.current.style.opacity = "0";
-      }
-      visible.current = false;
-    };
-
-    const showCursor = () => {
-      if (cursorRef.current) {
-        cursorRef.current.style.opacity = "1";
-      }
-      visible.current = true;
-    };
+    const hide = () => (cursorRef.current.style.opacity = "0");
 
     const animate = () => {
       pos.current.x += (mouse.current.x - pos.current.x) * smoothness;
       pos.current.y += (mouse.current.y - pos.current.y) * smoothness;
 
-      if (cursorRef.current && visible.current) {
-        cursorRef.current.style.transform =
-          `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
-      }
+      cursorRef.current.style.transform =
+        `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
 
       requestAnimationFrame(animate);
     };
 
     document.addEventListener("mousemove", moveMouse);
-    document.addEventListener("mouseleave", hideCursor);
-    document.addEventListener("mouseenter", showCursor);
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) hideCursor();
-    });
-
+    document.addEventListener("mouseleave", hide);
     animate();
 
     return () => {
       document.removeEventListener("mousemove", moveMouse);
     };
-  }, []);
+  }, [cursorEnabled]);
+
+  if (!cursorEnabled) return null;
 
   return (
     <>
-      {/* Hide system cursor */}
       <style>
-        {`
-          * {
-            cursor: none !important;
-          }
-        `}
+        {`* { cursor: none !important; }`}
       </style>
 
       <div

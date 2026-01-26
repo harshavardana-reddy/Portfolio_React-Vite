@@ -1,20 +1,20 @@
-import { BrowserRouter } from "react-router-dom"
-import MainNavBar from  "./Components/MainNavBar"
-import { ThemeProvider } from './Components/ThemeContext';
+import { BrowserRouter } from "react-router-dom";
+import MainNavBar from "./Components/MainNavBar";
+import { ThemeProvider } from "./Components/ThemeContext";
+import { CursorProvider } from "./Components/CursorContext";
 import CustomCursor from "./Components/CustomCursor";
 
 function App() {
-
   return (
-    <div>
-      <ThemeProvider>
+    <ThemeProvider>
+      <CursorProvider>
         <BrowserRouter>
-          <CustomCursor/>
-          <MainNavBar/>
+          <CustomCursor />
+          <MainNavBar />
         </BrowserRouter>
-      </ThemeProvider>
-    </div>
-  )
+      </CursorProvider>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;

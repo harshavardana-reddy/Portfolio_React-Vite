@@ -17,6 +17,9 @@ import socialLinks from '../Data/Sociallinks';
 import { BsFillHeartFill } from 'react-icons/bs';
 import { SiVite } from 'react-icons/si';
 import { FaReact } from 'react-icons/fa';
+import { useCursor } from "./CursorContext";
+import { FiMousePointer } from "react-icons/fi";
+
 
 const navItems = [
   { name: "Home", path: "/", icon: <FiHome size={18} /> },
@@ -79,6 +82,7 @@ export default function MainNavBar() {
   const { darkMode, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { toggleCursor, cursorEnabled, isDesktop } = useCursor();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -184,6 +188,21 @@ export default function MainNavBar() {
                     {social.icon}
                   </a>
                 ))}
+
+                {isDesktop && (
+                  <button
+                    onClick={toggleCursor}
+                    className={`p-2 rounded-full transition-all ${
+                      cursorEnabled
+                        ? "text-cyan-400 hover:bg-cyan-400/10"
+                        : "text-gray-400 hover:bg-gray-400/10"
+                    }`}
+                    title="Toggle Custom Cursor"
+                  >
+                    <FiMousePointer size={18} />
+                  </button>
+                )}
+
               </div>
               
               {/* Theme toggle */}
