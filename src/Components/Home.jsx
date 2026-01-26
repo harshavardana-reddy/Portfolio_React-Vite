@@ -315,7 +315,7 @@ const ProfileSection = ({ darkMode, themeClasses, hoveredSkill, setHoveredSkill 
         <div className={`absolute inset-0 rounded-full border-4 border-transparent group-hover:border-cyan-300/50 transition-all duration-300 pointer-events-none ${
           darkMode ? '' : 'group-hover:border-cyan-500/50'
         }`}></div>
-        <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-transparent transition-opacity duration-500 ${themeClasses.profileGlow} opacity-0 group-hover:opacity-100`}></div>
+        <div className={`absolute inset-0 bg-linear-to-br from-transparent via-transparent transition-opacity duration-500 ${themeClasses.profileGlow} opacity-0 group-hover:opacity-100`}></div>
         <div className={`absolute inset-0 transition-all duration-500 ${themeClasses.profileOverlay}`}></div>
       </div>
       

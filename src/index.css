@@ -1,23 +1,68 @@
 @import "tailwindcss";
 
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
+
+/* ============================= */
+/*        Custom Cursor          */
+/* ============================= */
+
+.custom-glow-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 32px;
+  height: 32px;
+
+  pointer-events: none;
+  /* 🔥 critical */
+  z-index: 9999;
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  will-change: transform;
+}
+
+/* Visual + animation layer */
+.custom-glow-cursor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: var(--cursor-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  filter:
+    drop-shadow(0 0 6px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 12px rgba(0, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+}
+
+/* ============================= */
+/*        Animations             */
+/* ============================= */
 
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 @keyframes bounce-slow {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
