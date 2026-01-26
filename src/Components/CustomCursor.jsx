@@ -3,43 +3,71 @@ import cursor from "../assets/cursor/images/pointer.png";
 
 export default function CustomCursor() {
   const cursorRef = useRef(null);
+
   const mouse = useRef({ x: 0, y: 0 });
   const pos = useRef({ x: 0, y: 0 });
+  const visible = useRef(false);
 
-  const speed = 1.00; // 🔥 Increase this (0.3 → 0.6 = faster)
+  const smoothness = 0.12;
 
   useEffect(() => {
+    // ❌ Disable on touch devices
+    if ("ontouchstart" in window) return;
+
     const moveMouse = (e) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
+
+      if (!visible.current && cursorRef.current) {
+        visible.current = true;
+        cursorRef.current.style.opacity = "1";
+      }
+    };
+
+    const hideCursor = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = "0";
+      }
+      visible.current = false;
+    };
+
+    const showCursor = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = "1";
+      }
+      visible.current = true;
     };
 
     const animate = () => {
-      // LERP (smooth + fast)
-      pos.current.x += (mouse.current.x - pos.current.x) * speed;
-      pos.current.y += (mouse.current.y - pos.current.y) * speed;
+      pos.current.x += (mouse.current.x - pos.current.x) * smoothness;
+      pos.current.y += (mouse.current.y - pos.current.y) * smoothness;
 
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `
-          translate3d(${pos.current.x}px, ${pos.current.y}px, 0)
-          translate(-50%, -50%)
-        `;
+      if (cursorRef.current && visible.current) {
+        cursorRef.current.style.transform =
+          `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
       }
 
       requestAnimationFrame(animate);
     };
 
-    window.addEventListener("mousemove", moveMouse);
+    document.addEventListener("mousemove", moveMouse);
+    document.addEventListener("mouseleave", hideCursor);
+    document.addEventListener("mouseenter", showCursor);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) hideCursor();
+    });
+
     animate();
 
     return () => {
-      window.removeEventListener("mousemove", moveMouse);
+      document.removeEventListener("mousemove", moveMouse);
     };
   }, []);
 
   return (
     <>
-      {/* Hide default cursor */}
+      {/* Hide system cursor */}
       <style>
         {`
           * {
@@ -50,14 +78,9 @@ export default function CustomCursor() {
 
       <div
         ref={cursorRef}
-        className="pointer-events-none fixed z-9999"
-      >
-        <img
-          src={cursor}
-          alt="cursor"
-          className="w-8 h-8 drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]"
-        />
-      </div>
+        className="custom-glow-cursor"
+        style={{ "--cursor-image": `url(${cursor})` }}
+      />
     </>
   );
 }

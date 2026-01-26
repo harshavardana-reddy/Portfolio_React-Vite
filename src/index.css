@@ -1,27 +1,68 @@
 @import "tailwindcss";
 
-body {
-  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFJSURBVHgB7ZXBDcIwDESfK8AJjMAJjMAJjMAJjMAJjIA6gTGYgBO6QScoShTFUdKehD6JSOzEfu/sJgAAAP8sXdelNE3z1HX9cs7dPvE8796Lc+6e5/lD13Xp14Cs67o9iqKntfYcx/G9LMu3aZqX9/5irT2FYXgry/LwUUC+rushCIIby/NhGF7Lsjx+FJCXZRkMw/BM0/QWRdGjKIqL7/2apnnHcXyVZXn0UUBeVVUwjuMzTdN7mqbXoijOvvdr27b3NE3vRVGcPgqo1XU9WGtPWZbdsiy7bJ7v6rpe8jw/W2tPdV0PPgqo+b8/5Hl+T9P0lqbpzfd+TdO84zi+xnF8zfP8oq4BAAAA/8ALw3B2zl3XdX2s67qsy2JZlnlZlnlZ13VZ13VZt8uyLPM0TfOyLPMwDOcvYwAAAPy6N7r5Jb0ZeltvAAAAAElFTkSuQmCC') 0 0, auto;
-}
-
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
+
+/* ============================= */
+/*        Custom Cursor          */
+/* ============================= */
+
+.custom-glow-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 32px;
+  height: 32px;
+
+  pointer-events: none;
+  /* 🔥 critical */
+  z-index: 9999;
+
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  will-change: transform;
+}
+
+/* Visual + animation layer */
+.custom-glow-cursor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: var(--cursor-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  filter:
+    drop-shadow(0 0 6px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 12px rgba(0, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(0, 255, 255, 0.4));
+}
+
+/* ============================= */
+/*        Animations             */
+/* ============================= */
 
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 @keyframes bounce-slow {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
