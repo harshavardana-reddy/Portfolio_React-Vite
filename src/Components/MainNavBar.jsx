@@ -41,15 +41,14 @@ const AnimatedNavLink = ({ to, icon, name, darkMode, onClick }) => {
     <NavLink
       to={to}
       onClick={onClick}
-      className={({ isActive }) => 
-        `relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300 flex items-center ${
-          isActive 
-            ? darkMode 
-              ? 'text-white' 
-              : 'text-gray-900'
-            : darkMode 
-              ? 'text-gray-300 hover:text-white' 
-              : 'text-gray-600 hover:text-gray-900'
+      className={({ isActive }) =>
+        `relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300 flex items-center ${isActive
+          ? darkMode
+            ? 'text-white'
+            : 'text-gray-900'
+          : darkMode
+            ? 'text-gray-300 hover:text-white'
+            : 'text-gray-600 hover:text-gray-900'
         }`
       }
     >
@@ -58,13 +57,12 @@ const AnimatedNavLink = ({ to, icon, name, darkMode, onClick }) => {
           <span className="mr-2 z-10">{icon}</span>
           <span className="z-10">{name}</span>
           {isActive && (
-            <motion.span 
+            <motion.span
               layoutId="navIndicator"
-              className={`absolute inset-0 rounded-full ${
-                darkMode 
-                  ? 'bg-gray-800/50' 
-                  : 'bg-white/80'
-              }`}
+              className={`absolute inset-0 rounded-full ${darkMode
+                ? 'bg-gray-800/50'
+                : 'bg-white/80'
+                }`}
               transition={{
                 type: "spring",
                 stiffness: 500,
@@ -105,11 +103,10 @@ export default function MainNavBar() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-500 ${
-        darkMode
-          ? 'bg-[#020617] text-gray-100'         // dark cyberpunk
-          : 'bg-slate-50 text-slate-900'        // light cyberpunk
-      }`}
+      className={`min-h-screen transition-colors duration-500 ${darkMode
+        ? 'bg-[#020617] text-gray-100'         // dark cyberpunk
+        : 'bg-slate-50 text-slate-900'        // light cyberpunk
+        }`}
     >
       {/* Cyberpunk neon radial glow background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
@@ -130,15 +127,13 @@ export default function MainNavBar() {
 
       {/* Glassmorphic Navbar */}
       <nav
-        className={`fixed w-full z-40 transition-all duration-500 ${
-          scrolled 
-            ? 'py-2 backdrop-blur-xl shadow-[0_0_40px_rgba(56,189,248,0.25)]' 
-            : 'py-4 backdrop-blur-lg shadow-[0_0_30px_rgba(168,85,247,0.2)]'
-        } ${
-          darkMode 
-            ? 'bg-slate-950/80 border-b border-cyan-500/30' 
+        className={`fixed w-full z-40 transition-all duration-500 ${scrolled
+          ? 'py-2 backdrop-blur-xl shadow-[0_0_40px_rgba(56,189,248,0.25)]'
+          : 'py-4 backdrop-blur-lg shadow-[0_0_30px_rgba(168,85,247,0.2)]'
+          } ${darkMode
+            ? 'bg-slate-950/80 border-b border-cyan-500/30'
             : 'bg-white/80 border-b border-cyan-400/40'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-12">
@@ -155,7 +150,7 @@ export default function MainNavBar() {
                 DevPortfolio
               </span>
             </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
@@ -168,22 +163,21 @@ export default function MainNavBar() {
                 />
               ))}
             </div>
-            
+
             {/* Right side controls */}
             <div className="flex items-center space-x-4">
               {/* Social icons */}
               <div className="hidden md:flex items-center space-x-3">
                 {socialIcons.map((social, i) => (
-                  <a 
+                  <a
                     key={i}
-                    href={social.url} 
-                    target="_blank" 
+                    href={social.url}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2 rounded-full transition-all ${
-                      darkMode 
-                        ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' 
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
-                    }`}
+                    className={`p-2 rounded-full transition-all ${darkMode
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
+                      }`}
                   >
                     {social.icon}
                   </a>
@@ -192,11 +186,10 @@ export default function MainNavBar() {
                 {isDesktop && (
                   <button
                     onClick={toggleCursor}
-                    className={`p-2 rounded-full transition-all ${
-                      cursorEnabled
-                        ? "text-cyan-400 hover:bg-cyan-400/10"
-                        : "text-gray-400 hover:bg-gray-400/10"
-                    }`}
+                    className={`p-2 rounded-full transition-all ${cursorEnabled
+                      ? "text-cyan-400 hover:bg-cyan-400/10"
+                      : "text-gray-400 hover:bg-gray-400/10"
+                      }`}
                     title="Toggle Custom Cursor"
                   >
                     <FiMousePointer size={18} />
@@ -204,21 +197,20 @@ export default function MainNavBar() {
                 )}
 
               </div>
-              
+
               {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
-                className={`p-2 rounded-full transition-all ${
-                  darkMode 
-                    ? 'text-yellow-300 hover:bg-gray-800/50' 
-                    : 'text-yellow-600 hover:bg-white/80'
-                }`}
+                className={`p-2 rounded-full transition-all ${darkMode
+                  ? 'text-yellow-300 hover:bg-gray-800/50'
+                  : 'text-yellow-600 hover:bg-white/80'
+                  }`}
               >
                 {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
               </button>
-              
+
               {/* Mobile menu button */}
-              <button 
+              <button
                 onClick={toggleMobileMenu}
                 className="md:hidden p-2 rounded-md focus:outline-none"
               >
@@ -246,13 +238,11 @@ export default function MainNavBar() {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
-        >
-          <div className={`px-4 pt-2 pb-4 space-y-2 ${
-            darkMode ? 'bg-gray-900/90' : 'bg-white/90'
+        <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
+        >
+          <div className={`px-4 pt-2 pb-4 space-y-2 ${darkMode ? 'bg-gray-900/90' : 'bg-white/90'
+            }`}
           >
             {navItems.map((item) => (
               <AnimatedNavLink
@@ -266,16 +256,15 @@ export default function MainNavBar() {
             ))}
             <div className="flex justify-center space-x-4 pt-4">
               {socialIcons.map((social, i) => (
-                <a 
+                <a
                   key={i}
-                  href={social.url} 
-                  target="_blank" 
+                  href={social.url}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 rounded-full transition-all ${
-                    darkMode 
-                      ? 'text-gray-300 hover:text-white hover:bg-gray-800/50' 
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
-                  }`}
+                  className={`p-3 rounded-full transition-all ${darkMode
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-white/80'
+                    }`}
                 >
                   {social.icon}
                 </a>
@@ -287,11 +276,10 @@ export default function MainNavBar() {
 
       {/* Main Content with Page Transitions */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-8">
-        <div className={`backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 ${
-          darkMode 
-            ? 'bg-gray-900/30 border border-gray-700/30' 
-            : 'bg-white/30 border border-gray-200/30'
-        }`}
+        <div className={`backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 ${darkMode
+          ? 'bg-gray-900/30 border border-gray-700/30'
+          : 'bg-white/30 border border-gray-200/30'
+          }`}
         >
           <AnimatePresence mode='wait'>
             <Routes>
@@ -370,20 +358,48 @@ export default function MainNavBar() {
         </div>
       </main>
 
-      <footer className={`py-6 transition-colors duration-500 backdrop-blur-sm ${darkMode? 'bg-gray-900/10 text-gray-300':'bg-white/10 text-gray-600'}`}>
+      <footer className={`relative py-6 transition-colors duration-500 backdrop-blur-xl overflow-hidden ${darkMode
+        ? 'bg-slate-950/70 text-gray-300 border-t border-cyan-500/30 shadow-[0_-0_40px_rgba(56,189,248,0.25)]'
+        : 'bg-white/70 text-gray-600 border-t border-cyan-400/40 shadow-[0_-0_30px_rgba(34,211,238,0.25)]'
+        }`}>
+        {/* Footer neon glow background */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          {darkMode ? (
+            <>
+              <div className="absolute top-0 left-1/4 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_center,#22d3ee_0,#22d3ee20_40%,transparent_70%)] blur-3xl" />
+              <div className="absolute top-0 right-1/4 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_center,#a855f7_0,#a855f720_40%,transparent_70%)] blur-3xl" />
+            </>
+          ) : (
+            <>
+              <div className="absolute top-0 left-1/3 h-40 w-40 rounded-full bg-[radial-gradient(circle_at_center,#06b6d4_0,#06b6d420_40%,transparent_70%)] blur-3xl opacity-70" />
+            </>
+          )}
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-center">
             <div className="text-sm text-center">
               <p className="flex items-center justify-center">
-                Made with <BsFillHeartFill className="mx-1 text-red-500 animate-pulse" /> by Harsha using  
-                <span className="relative mx-1">
-                  <SiVite className={`text-[#ffd028] animate-bounce ${darkMode ? 'drop-shadow-[0_0_4px_#ffd02880]' : 'drop-shadow-[0_0_4px_#ffd028]'}`} />
+                Made with <BsFillHeartFill className="mx-1 text-red-500 animate-pulse" /> by Harsha using
+                <span className="relative mx-1 flex items-center justify-center">
+                  <span className="absolute inset-0 rounded-full bg-[#ffd028]/20 blur-md" />
+                  <SiVite className={`relative text-[#ffd028] animate-bounce ${darkMode
+                      ? 'drop-shadow-[0_0_6px_#ffd028aa]'
+                      : 'drop-shadow-[0_0_6px_#ffd028]'
+                    }`} />
                 </span>
-                Vite&nbsp;+ 
-                <span className="relative mx-1">
-                  <FaReact className={`text-[#61dafb] animate-spin-slow ${darkMode ? 'drop-shadow-[0_0_4px_#61dafb80]' : 'drop-shadow-[0_0_4px_#61dafb]'}`} />
+
+                Vite&nbsp;+
+
+                <span className="relative mx-1 flex items-center justify-center">
+                  <span className="absolute inset-0 rounded-full bg-[#61dafb]/20 blur-md" />
+                  <FaReact className={`relative text-[#61dafb] animate-spin-slow ${darkMode
+                      ? 'drop-shadow-[0_0_6px_#61dafbaa]'
+                      : 'drop-shadow-[0_0_6px_#61dafb]'
+                    }`} />
                 </span>
-                React 
+
+                React
               </p>
               <p>© {new Date().getFullYear()} DevPortfolio. All rights reserved.</p>
             </div>

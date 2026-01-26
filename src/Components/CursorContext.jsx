@@ -8,7 +8,7 @@ export function CursorProvider({ children }) {
 
   const [cursorEnabled, setCursorEnabled] = useState(() => {
     const saved = localStorage.getItem("customCursor");
-    return saved ? JSON.parse(saved) : true;
+    return saved ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
