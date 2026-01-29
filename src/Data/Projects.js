@@ -1,5 +1,14 @@
 const Projects = [
     {
+        title:"Scalable Microservices Architecture with GitOps, Service Mesh, and Queueing-based Autoscaling",
+        description:"A scalable microservices architecture implemented with GitOps practices, service mesh technologies, and queueing-based autoscaling mechanisms. The system is built on Kubernetes and Amazon EKS, utilizing Istio for service mesh management, Argo CD for GitOps deployment automation, Prometheus and Grafana for monitoring and observability, and Docker for containerization.",
+        techStack:"Kubernetes, Amazon EKS, Istio, Argo CD, Prometheus, Grafana, Docker",
+        gitLink:"https://github.com/harshavardana-reddy/Autoscaler-Kubernetes-Istio-ArgoCD-Monitoring",
+        thumbnail:"",
+        duration:"December 2024 - May 2025",
+        projectImages:"../assets/projects/sma/*.png"
+    },
+    {
         title:"E-Commerce Web Application using MERN Stack and Devops",
         description:"A scalable e-commerce web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) and integrated DevOps practices and secured with JWT Authentication with RBAC(Role-Based-Access-Control) Authorization. The project features user authentication, product management, shopping cart, and order processing. CI/CD pipelines are implemented using Jenkins and Bash scripting. The application is containerized with Docker and orchestrated using Docker Compose. Infrastructure is provisioned and managed with Terraform on AWS, enabling automated deployment and high availability.",
         techStack:"React.js,Node.js,Express.js,MongoDB,Docker,Jenkins,Bash-Scripting,Docker-Compose,Terraform,AWS,Jwt",

@@ -2,10 +2,46 @@
 import { motion } from "framer-motion";
 import { useTheme } from "./ThemeContext";
 import ProjectsData from "../Data/Projects";
-import { FaGithub, FaExternalLinkAlt, FaMusic, FaUniversity, FaUserClock, FaBook, FaCode, FaJava, FaNodeJs, FaShoppingCart, FaDocker, FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { SiDjango, SiReact, SiSpring, SiRedhat, SiPython, SiHtml5, SiCss3, SiJavascript, SiMongodb, SiMysql, SiPostgresql, SiExpress, SiTerraform } from "react-icons/si";
+import { 
+  FaGithub, 
+  FaExternalLinkAlt, 
+  FaMusic, 
+  FaUniversity, 
+  FaUserClock, 
+  FaBook, 
+  FaCode, 
+  FaJava, 
+  FaNodeJs, 
+  FaShoppingCart, 
+  FaDocker,
+  FaChevronRight, 
+  FaChevronLeft 
+} from "react-icons/fa";
+
+import { 
+  SiDjango, 
+  SiReact, 
+  SiSpring, 
+  SiRedhat, 
+  SiPython, 
+  SiHtml5, 
+  SiCss3, 
+  SiJavascript, 
+  SiMongodb, 
+  SiMysql, 
+  SiPostgresql, 
+  SiExpress, 
+  SiTerraform,
+  SiKubernetes,
+  SiIstio,
+  SiArgo,
+  SiPrometheus,
+  SiGrafana,
+  SiAmazon
+} from "react-icons/si";
+
 import { GrSecure } from "react-icons/gr";
-import { FaJenkins, FaAws } from "react-icons/fa6";
+import { FaJenkins } from "react-icons/fa6";
 import ecom1 from "../assets/projects/ecom/Screenshot (2856).png"
 import ecom2 from "../assets/projects/ecom/Screenshot (2857).png"
 import ecom3 from "../assets/projects/ecom/Screenshot (2858).png"
@@ -133,12 +169,38 @@ import mss15 from "../assets/projects/mss/Screenshot (2836).png"
 import React, { useState, useEffect, useRef } from "react";
 import ImageModal from "../utils/Modals";
 
+import sma1 from "../assets/projects/sma/Screenshot (293).png"
+import sma2 from "../assets/projects/sma/Screenshot (294).png"
+import sma3 from "../assets/projects/sma/Screenshot (295).png"
+import sma4 from "../assets/projects/sma/Screenshot (296).png"
+import sma5 from "../assets/projects/sma/Screenshot (297).png"
+import sma6 from "../assets/projects/sma/Screenshot (298).png"
+import sma7 from "../assets/projects/sma/Screenshot (299).png"
+import sma8 from "../assets/projects/sma/Screenshot (300).png"
+import sma9 from "../assets/projects/sma/Screenshot (301).png"
+import sma10 from "../assets/projects/sma/Screenshot (302).png"
+import sma11 from "../assets/projects/sma/Screenshot (303).png"
+import sma12 from "../assets/projects/sma/Screenshot (304).png"
+import sma13 from "../assets/projects/sma/Screenshot (305).png"
+import sma14 from "../assets/projects/sma/Screenshot (306).png"
+import sma15 from "../assets/projects/sma/Screenshot (307).png"
+import sma16 from "../assets/projects/sma/Screenshot (308).png"
+import sma17 from "../assets/projects/sma/Screenshot (309).png"
+import sma18 from "../assets/projects/sma/Screenshot (310).png"
+import sma19 from "../assets/projects/sma/Screenshot (311).png"
+import sma20 from "../assets/projects/sma/Screenshot (312).png"
+import sma21 from "../assets/projects/sma/Screenshot (313).png"
+import sma22 from "../assets/projects/sma/Screenshot (314).png"
+import sma23 from "../assets/projects/sma/Screenshot (315).png"
+
+
 const projectImages = {
   ecom: [ecom1, ecom2, ecom3, ecom4, ecom5, ecom6, ecom7, ecom8, ecom9, ecom10, ecom11, ecom12, ecom13, ecom14, ecom15, ecom16, ecom17, ecom18, ecom19, ecom20, ecom21, ecom22, ecom23, ecom24, ecom25, ecom26, ecom27, ecom28, ecom29, ecom30, ecom31, ecom32, ecom33, ecom34, ecom35, ecom36, ecom37, ecom38, ecom39, ecom40, ecom41, ecom42, ecom43, ecom44, ecom45],
   elms: [elms1, elms2, elms3, elms4, elms5, elms6, elms7, elms8, elms9, elms10, elms11, elms12, elms13],
   mss: [mss1, mss2, mss3, mss4, mss5, mss6, mss7, mss8, mss9, mss10, mss11, mss12, mss13, mss14, mss15],
   oags: [oags1, oags2, oags3, oags4, oags5, oags6, oags7, oags8, oags9, oags10, oags11, oags12, oags13, oags14, oags15, oags16, oags17, oags18, oags19, oags20, oags21, oags22, oags23, oags24, oags25, oags26, oags27, oags28],
-  uems: [uems1, uems2, uems3, uems4, uems5, uems6, uems7, uems8, uems9, uems10, uems11, uems12, uems13, uems14, uems15, uems16, uems17, uems18, uems19]
+  uems: [uems1, uems2, uems3, uems4, uems5, uems6, uems7, uems8, uems9, uems10, uems11, uems12, uems13, uems14, uems15, uems16, uems17, uems18, uems19],
+  sma: [sma1, sma2, sma3, sma4, sma5, sma6, sma7, sma8, sma9, sma10, sma11, sma12, sma13, sma14, sma15, sma16, sma17, sma18, sma19, sma20, sma21, sma22, sma23]
 }
 
 
@@ -319,6 +381,7 @@ export default function Projects() {
     if (title.includes("University")) return "uems";
     if (title.includes("Employee")) return "elms";
     if (title.includes("MUSIC")) return "mss";
+    if (title.includes("Scalable")) return "sma";
     return "";
   };
 
@@ -330,27 +393,33 @@ export default function Projects() {
       let icon;
 
       switch (trimmedTech) {
-        case 'Django': icon = <SiDjango className="text-green-700" />; break;
-        case 'React.js': icon = <SiReact className="text-blue-400" />; break;
-        case 'Java': icon = <FaJava className="text-red-500" />; break;
-        case 'Spring Boot': icon = <SiSpring className="text-green-500" />; break;
-        case 'JBOSS EAP': icon = <SiRedhat className="text-red-400" />; break;
-        case 'Python': icon = <SiPython className="text-blue-400" />; break;
-        case 'HTML': icon = <SiHtml5 className="text-orange-500" />; break;
-        case 'CSS': icon = <SiCss3 className="text-blue-500" />; break;
-        case 'JavaScript': icon = <SiJavascript className="text-yellow-400" />; break;
-        case 'MongoDB': icon = <SiMongodb className="text-green-500" />; break;
-        case 'MySQL': icon = <SiMysql className="text-blue-600" />; break;
-        case 'PostgreSQL': icon = <SiPostgresql className="text-blue-700" />; break;
-        case 'Node.js': icon = <FaNodeJs className="text-green-700" />; break;
-        case 'Express.js': icon = <SiExpress className="text-yellow-700" />; break;
-        case 'Jwt': icon = <GrSecure className="text-purple-600" />; break;
-        case 'Docker': icon = <FaDocker className="text-blue-500" />; break;
-        case 'Jenkins': icon = <FaJenkins className="text-orange-500" />; break;
-        case 'AWS': icon = <FaAws className="text-yellow-600" />; break;
-        case 'Terraform': icon = <SiTerraform className="text-purple-600" />; break;
-        default: icon = <FaCode className="text-gray-500" />;
-      }
+      case 'Django': icon = <SiDjango className="text-green-700" />; break;
+      case 'React.js': icon = <SiReact className="text-blue-400" />; break;
+      case 'Java': icon = <FaJava className="text-red-500" />; break;
+      case 'Spring Boot': icon = <SiSpring className="text-green-500" />; break;
+      case 'JBOSS EAP': icon = <SiRedhat className="text-red-400" />; break;
+      case 'Python': icon = <SiPython className="text-blue-400" />; break;
+      case 'HTML': icon = <SiHtml5 className="text-orange-500" />; break;
+      case 'CSS': icon = <SiCss3 className="text-blue-500" />; break;
+      case 'JavaScript': icon = <SiJavascript className="text-yellow-400" />; break;
+      case 'MongoDB': icon = <SiMongodb className="text-green-500" />; break;
+      case 'MySQL': icon = <SiMysql className="text-blue-600" />; break;
+      case 'PostgreSQL': icon = <SiPostgresql className="text-blue-700" />; break;
+      case 'Node.js': icon = <FaNodeJs className="text-green-700" />; break;
+      case 'Express.js': icon = <SiExpress className="text-yellow-700" />; break;
+      case 'Jwt': icon = <GrSecure className="text-purple-600" />; break;
+      case 'Docker': icon = <FaDocker className="text-blue-500" />; break;
+      case 'Jenkins': icon = <FaJenkins className="text-orange-500" />; break;
+      case 'AWS': icon = <SiAmazon className="text-yellow-600" />; break;
+      case 'Amazon EKS': icon = <SiAmazon className="text-yellow-600" />; break;
+      case 'Terraform': icon = <SiTerraform className="text-purple-600" />; break;
+      case 'Kubernetes': icon = <SiKubernetes className="text-blue-500" />; break;
+      case 'Istio': icon = <SiIstio className="text-red-500" />; break;
+      case 'Argo CD': icon = <SiArgo className="text-orange-500" />; break;
+      case 'Prometheus': icon = <SiPrometheus className="text-red-500" />; break;
+      case 'Grafana': icon = <SiGrafana className="text-orange-500" />; break;
+      default: icon = <FaCode className="text-gray-500" />;
+    }
 
       return (
         <motion.div
